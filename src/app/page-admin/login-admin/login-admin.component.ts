@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'
+  templateUrl: './login-admin.component.html',
+  styleUrls: ['./login-admin.component.css'
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginAdminComponent implements OnInit {
   isCollapsed = false;
   constructor() { }
 

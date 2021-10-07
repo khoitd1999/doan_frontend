@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/pages/welcome' },
   { path: 'pages/welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
-  { path: 'pages_admin', loadChildren: () => import('./page_admin/pages_admin.module').then(m => m.PagesModule) },
+  { path: 'pages_admin', loadChildren: () => import('./page-admin/pages-admin.module').then(m => m.PagesAdminModule) },
   { path: '**', pathMatch: 'full', redirectTo: '/pages/welcome' }
 ];
 

@@ -1,0 +1,37 @@
+<nz-layout style="height: auto">
+  <nz-sider>
+    <div class="logo">
+      <span style="font-weight: bold; font-size: 20pt; color: #fff">SHOP</span>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item>
+        <i nz-icon nzType="home"></i>
+        <span routerLink="/pages_admin">Danh sách kho</span>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="mobile"></i>
+        <span routerLink="/pages_admin/product">Danh sách sản phẩm</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"
+      ></i>
+    </nz-header>
+    <nz-content>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>ADMIN</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{alertService.name}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>©2021</nz-footer>
+  </nz-layout>
+</nz-layout>
