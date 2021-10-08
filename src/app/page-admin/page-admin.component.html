@@ -12,6 +12,10 @@
         <i nz-icon nzType="mobile"></i>
         <span routerLink="/pages_admin/product">Danh sách sản phẩm</span>
       </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="import"></i>
+        <span routerLink="/pages_admin/nhap-kho">Quản lý nhập kho</span>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>
@@ -26,7 +30,7 @@
     <nz-content>
       <nz-breadcrumb>
         <nz-breadcrumb-item>ADMIN</nz-breadcrumb-item>
-        <nz-breadcrumb-item>{{alertService.name}}</nz-breadcrumb-item>
+<!--        <nz-breadcrumb-item>{{alertService.name}}</nz-breadcrumb-item>-->
       </nz-breadcrumb>
       <div class="inner-content">
         <router-outlet></router-outlet>

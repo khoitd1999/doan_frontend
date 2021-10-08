@@ -11,7 +11,7 @@ import {NzModalService} from "ng-zorro-antd";
 })
 export class WarehouseComponent implements OnInit {
   warehouses: any;
-  total = 1;
+  total = 0;
   loading = false;
   pageSize = 10;
   pageIndex = 1;

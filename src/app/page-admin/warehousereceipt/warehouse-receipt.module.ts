@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 
-import {ProductRoutingModule} from './product-routing.module';
+import {WarehouseReceiptRoutingModule} from './warehouse-receipt-routing.module';
 
-import {ProductComponent} from './product.component';
+import {WarehouseReceiptComponent} from './warehouse-receipt.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NzGridModule} from "ng-zorro-antd/grid";
@@ -19,14 +19,14 @@ import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzTransferModule} from "ng-zorro-antd/transfer";
 import {NzBreadCrumbModule, NzDatePickerModule, NzUploadModule} from "ng-zorro-antd";
-import {PagesAdminModule} from "../pages-admin.module";
 import {CustomDatePipe} from "../../UtilsService/custom.datepipe";
-import {AlertService} from "../../UtilsService/alert.service";
+import {PagesAdminModule} from "../pages-admin.module";
+import {WarehouseReceiptUpdateComponent} from "./warehouse-receipt-update.component";
 
 
 @NgModule({
   imports: [
-    ProductRoutingModule,
+    WarehouseReceiptRoutingModule,
     CommonModule,
     NzGridModule,
     NzInputModule,
@@ -49,14 +49,12 @@ import {AlertService} from "../../UtilsService/alert.service";
     PagesAdminModule
   ],
   declarations: [
-    ProductComponent
+    WarehouseReceiptComponent,
+    WarehouseReceiptUpdateComponent
   ],
-  exports: [
-    ProductComponent
-  ],
-  providers: [
-    AlertService
+  exports: [WarehouseReceiptComponent,
+
   ]
 })
-export class ProductModule {
+export class WarehouseReceiptModule {
 }

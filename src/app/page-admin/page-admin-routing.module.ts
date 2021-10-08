@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
+      },
+      {
+        path: 'nhap-kho',
+        loadChildren: () => import('./warehousereceipt/warehouse-receipt.module').then(m => m.WarehouseReceiptModule)
       }
     ],
   },

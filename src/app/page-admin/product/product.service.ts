@@ -27,7 +27,7 @@ export class ProductService {
   }
 
   loadAll(): Observable<any> {
-    return this.http.get<any>(this.sourceUrl + '/load-all').pipe(catchError(() => of({data: []})));
+    return this.http.get<any>(this.sourceUrl + '/load-all');
   }
 
   checkBeforeDelete(req): Observable<any> {

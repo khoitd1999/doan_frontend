@@ -11,7 +11,7 @@ import {Product} from "../../entity/product";
 })
 export class ProductComponent implements OnInit {
   products: any;
-  total = 1;
+  total = 0;
   loading = false;
   pageSize = 10;
   pageIndex = 1;
@@ -233,25 +233,25 @@ export class ProductComponent implements OnInit {
   }
 
   checkErr() {
-    // if (!this.product.namePro) {
-    //   this.alertService.error('Chưa nhập tên sản phẩm');
-    //   return true;
-    // } else if (!this.product.idCat) {
-    //   this.alertService.error('Chưa chọn loại sản phẩm');
-    //   return true;
-    // } else if (!this.product.idBra) {
-    //   this.alertService.error('Chưa chọn nhãn hàng');
-    //   return true;
-    // } else if (!this.product.idBra) {
-    //   this.alertService.error('Chưa chọn nhãn hàng');
-    //   return true;
-    // } else if (!this.product.price) {
-    //   this.alertService.error('Chưa nhập giá');
-    //   return true;
-    // } else if (!this.product.date) {
-    //   this.alertService.error('Chưa chọn ngày ra mắt');
-    //   return true;
-    // }
+    if (!this.product.namePro) {
+      this.alertService.error('Chưa nhập tên sản phẩm');
+      return true;
+    } else if (!this.product.idCat) {
+      this.alertService.error('Chưa chọn loại sản phẩm');
+      return true;
+    } else if (!this.product.idBra) {
+      this.alertService.error('Chưa chọn nhãn hàng');
+      return true;
+    } else if (!this.product.idBra) {
+      this.alertService.error('Chưa chọn nhãn hàng');
+      return true;
+    } else if (!this.product.price) {
+      this.alertService.error('Chưa nhập giá');
+      return true;
+    } else if (!this.product.date) {
+      this.alertService.error('Chưa chọn ngày ra mắt');
+      return true;
+    }
     return false;
   }
 
