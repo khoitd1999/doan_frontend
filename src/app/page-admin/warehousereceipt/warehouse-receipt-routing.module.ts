@@ -7,6 +7,7 @@ import {HttpResponse} from "@angular/common/http";
 import {of} from "rxjs";
 import { map } from 'rxjs/operators';
 import {WareHouseReceipt} from "../../entity/warehousereceipt";
+import {AuthGuard} from "../../UtilsService/auth.guard";
 
 @Injectable({ providedIn: 'root' })
 export class WarehouseReceiptResolve implements Resolve<any> {
@@ -29,6 +30,7 @@ const routes: Routes = [
   {
     path: 'new',
     component: WarehouseReceiptUpdateComponent,
+    canActivate: [AuthGuard],
     resolve: {
       warehouseReceipt: WarehouseReceiptResolve
     }
@@ -36,6 +38,7 @@ const routes: Routes = [
   {
     path: ':id/edit',
     component: WarehouseReceiptUpdateComponent,
+    canActivate: [AuthGuard],
     resolve: {
       warehouseReceipt: WarehouseReceiptResolve
     }

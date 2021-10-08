@@ -74,12 +74,12 @@
         </td>
         <td style="width: 12.5%" [nzAlign]="'center'">
           <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
-            {{ data.price }}
+            {{ data.price | currency: 'VND':'symbol':'1.0-0':'vi-VN'}}
           </div>
           <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.price" (blur)="stopEdit()" (ngModelChange)="changeAmount(data)" />
         </td>
         <td style="width: 12.5%" [nzAlign]="'center'">
-          {{ data.amount }}
+          {{ data.amount | currency: 'VND':'symbol':'1.0-0':'vi-VN'}}
         </td>
         <td style="width: 12.5%" [nzAlign]="'center'">
           <a (click)="deleteRow(data.id)">Xóa</a>

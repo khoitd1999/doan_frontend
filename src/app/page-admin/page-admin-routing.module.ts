@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {PageAdminComponent} from "./page-admin.component";
+import {AuthGuard} from "../UtilsService/auth.guard";
 
 const routes: Routes = [
   {
     path: '',
     component: PageAdminComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
+        loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule)
+      },
+      {
+        path: 'warehouse',
         loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule)
       },
       {
@@ -24,10 +30,6 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login-admin/login-admin.module').then(m => m.LoginAdminModule)
-  },
-  {
-    path: '**',
-    redirectTo: '/not-found'
   }
 ];
 

@@ -75,7 +75,7 @@
         <td style="width: 15%">{{ data.code }}</td>
         <td style="width: 25%">{{ data.nameWar }}</td>
         <td style="width: 25%">{{ data.nameEmp }}</td>
-        <td style="width: 10%">{{ data.totalAmount }}</td>
+        <td style="width: 10%">{{ data.totalAmount | currency: 'VND':'symbol':'1.0-0':'vi-VN' }}</td>
         <td style="width: 10%">
           <i nz-icon nzType="edit" style="margin-left: 15px;" (click)="redirectToDetail(data.id)"></i>
         </td>
@@ -107,8 +107,8 @@
       <tr *ngFor="let data of wareHouseReceiptDetails; let i = index">
         <td style="width: 60%">{{ data.namePro }}</td>
         <td style="width: 10%">{{ data.quantity }}</td>
-        <td style="width: 15%">{{ data.price }}</td>
-        <td style="width: 15%">{{ data.amount }}</td>
+        <td style="width: 15%">{{ data.price | currency: 'VND':'symbol':'1.0-0':'vi-VN'}}</td>
+        <td style="width: 15%">{{ data.amount | currency: 'VND':'symbol':'1.0-0':'vi-VN'}}</td>
       </tr>
       </tbody>
     </nz-table>

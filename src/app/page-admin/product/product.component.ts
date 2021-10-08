@@ -129,12 +129,6 @@ export class ProductComponent implements OnInit {
     if (obj && !notNext) {
       this.product = Object.assign({}, obj);
       this.product.status = false;
-      // const status = await this.checkBefore(obj.id);
-      // if (status) {
-      //   this.showDeleteConfirm(this.warehouse, 'Đã có ít nhất một tài khoản sử dụng chức năng này. ' +
-      //     'Bạn có muốn tiếp tục không?', true);
-      //   return;
-      // }
     }
     console.log(this.product);
     try {
@@ -172,31 +166,6 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  checkBefore(id): any {
-    return new Promise(resolve => {
-      // this.functionService.checkBeforeDelete(id).subscribe(res => {
-      //   resolve(res.data);
-      // });
-    });
-  }
-
-  onSearch(searchText?): void {
-    // if (!this.warehouse.idPro) {
-    //   this.provinces = [];
-    //   this.districts = [];
-    //   this.wards = [];
-    //   this.loadMoreProvince(searchText);
-    // } else if (!this.warehouse.idDis) {
-    //   this.districts = [];
-    //   this.wards = [];
-    //   this.loadMoreDistrict(searchText);
-    // } else {
-    //   this.wards = [];
-    //   this.loadMoreWard(searchText);
-    // }
-
-  }
-
   searchPagination(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
@@ -228,10 +197,6 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  generateID(i): number {
-    return (this.pageIndex - 1) * this.pageSize + i;
-  }
-
   checkErr() {
     if (!this.product.namePro) {
       this.alertService.error('Chưa nhập tên sản phẩm');
@@ -254,6 +219,4 @@ export class ProductComponent implements OnInit {
     }
     return false;
   }
-
-
 }

@@ -9,9 +9,15 @@ import {AlertService} from "../UtilsService/alert.service";
 })
 export class PageAdminComponent implements OnInit {
   isCollapsed = false;
+  user: any;
   constructor(private route: Router,
               public alertService: AlertService) { }
   ngOnInit() {
-    
+    this.user = JSON.parse(sessionStorage.getItem('employee'));
+  }
+
+  logout() {
+    sessionStorage.removeItem('employee');
+    this.route.navigate(['/pages_admin/login']);
   }
 }

@@ -4,6 +4,11 @@ import {PageAdminComponent} from "./page-admin.component";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 import {AlertService} from "../UtilsService/alert.service";
 import {CustomDatePipe} from "../UtilsService/custom.datepipe";
+import {registerLocaleData} from "@angular/common";
+import localeVi from '@angular/common/locales/vi';
+import {AuthGuard} from "../UtilsService/auth.guard";
+
+registerLocaleData(localeVi, 'vi-VN');
 
 @NgModule({
   imports: [
@@ -18,7 +23,8 @@ import {CustomDatePipe} from "../UtilsService/custom.datepipe";
     CustomDatePipe
   ],
   providers: [
-    AlertService
+    AlertService,
+    AuthGuard
   ]
 })
 export class PagesAdminModule { }

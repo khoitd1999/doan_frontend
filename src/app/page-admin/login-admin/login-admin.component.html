@@ -1,22 +1,18 @@
 <div class="login">
   <div class="account-login">
-    <h1>Account Login</h1>
-    <form action="" class="login-form">
+    <h1>ĐĂNG NHẬP</h1>
+    <form class="login-form">
       <div class="form-group">
-        <input type="text" placeholder="User Name" class="form-control">
+        <input type="text" placeholder="Tên đăng nhập" class="form-control" name="username" [(ngModel)]="username">
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Password"  class="form-control">
+        <input type="password" placeholder="Mật khẩu"  class="form-control" name="password" [(ngModel)]="password">
       </div>
       <div class="remember">
-        <label class="custom-checkbox">Remember me
-          <input type="checkbox">
-          <span class="checkmark"></span>
-        </label>
-        <a href="#" class="pull-right">Forgot Password?</a>
+        <a href="#" class="pull-right">Quên mật khẩu ?</a>
       </div>
-      <button class="btn">Login</button>
-      <p>Are you new?<a href="#">Sign Up</a></p>
+      <button class="btn" (click)="checkLogin()">Đăng nhập</button>
+      <p>Bạn chưa có tài khoản?<a href="#">Đăng ký</a></p>
     </form>
   </div>
 </div>
