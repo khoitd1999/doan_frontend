@@ -14,8 +14,8 @@
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
         <nz-select style="width: 100%" [(ngModel)]="idCat" nzPlaceHolder="Chọn loại sản phẩm"
-                   nzAllowClear [nzServerSearch]=true>
-          <nz-option *ngFor="let option of categories" [nzValue]="option.id" [nzLabel]="option.nameCate"></nz-option>
+                   nzAllowClear (ngModelChange)="changeCategorySearch()">
+          <nz-option *ngFor="let option of categoriesSearch" [nzValue]="option.id" [nzLabel]="option.nameCate"></nz-option>
         </nz-select>
       </div>
       <div nz-col nzSpan="2" style="padding-left: 8px; margin-top: 15px;">
@@ -23,8 +23,8 @@
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
         <nz-select style="width: 100%" [(ngModel)]="idBra" nzPlaceHolder="Chọn nhãn hàng"
-                   nzAllowClear [nzServerSearch]=true>
-          <nz-option *ngFor="let option of brandes" [nzValue]="option.id" [nzLabel]="option.nameBra"></nz-option>
+                   nzAllowClear (ngModelChange)="changeBrandSearch()">
+          <nz-option *ngFor="let option of brandesSearch" [nzValue]="option.id" [nzLabel]="option.nameBra"></nz-option>
         </nz-select>
       </div>
     </div>
@@ -119,8 +119,8 @@
           </div>
           <div nz-col nzSpan="10">
             <nz-select style="width: 100%" nzShowSearch nzPlaceHolder="Chọn loại sản phẩm"
-                       nzAllowClear [(ngModel)]="product.idCat"  [nzServerSearch]=true>
-              <nz-option *ngFor="let option of categories" [nzValue]="option.id" [nzLabel]="option.nameCate"></nz-option>
+                       nzAllowClear [(ngModel)]="product.idCat"  (ngModelChange)="changeCategoryPopup()">
+              <nz-option *ngFor="let option of categoriesPopup" [nzValue]="option.id" [nzLabel]="option.nameCate"></nz-option>
             </nz-select>
           </div>
           <div nz-col nzSpan="2" style="padding-left: 20px;">
@@ -128,14 +128,14 @@
           </div>
           <div nz-col nzSpan="10">
             <nz-select style="width: 100%" nzShowSearch nzPlaceHolder="Chọn nhãn hàng"
-                       nzAllowClear  [(ngModel)]="product.idBra" [nzServerSearch]=true>
-              <nz-option *ngFor="let option of brandes" [nzValue]="option.id" [nzLabel]="option.nameBra"></nz-option>
+                       nzAllowClear  [(ngModel)]="product.idBra" (ngModelChange)="changeBrandPopup()">
+              <nz-option *ngFor="let option of brandesPopup" [nzValue]="option.id" [nzLabel]="option.nameBra"></nz-option>
             </nz-select>
           </div>
         </div>
         <div nz-row style="margin-top: 15px;">
           <div nz-col nzSpan="2">
-            Giá cả:
+            Giá bán:
           </div>
           <div nz-col nzSpan="10" >
             <input nz-input [(ngModel)]="product.price" />

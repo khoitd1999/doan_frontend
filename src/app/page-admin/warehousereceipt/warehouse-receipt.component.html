@@ -38,7 +38,7 @@
   <div class="body-page">
     <div nz-row>
       <div nz-col nzSpan="20">
-        <p style="font-size: 15px">Tìm thâý {{total}} kết quả</p>
+        <p style="font-size: 15px; font-weight: bold;">Tìm thâý {{total}} kết quả</p>
       </div>
       <div nz-col nzSpan="4">
         <div nz-row nzJustify="end">
@@ -82,7 +82,11 @@
       </tr>
       </tbody>
     </nz-table>
-
+    <div nz-row>
+      <div nz-col nzSpan="20">
+        <p style="font-size: 15px; font-weight: bold;">CHI TIẾT ĐƠN NHẬP KHO: {{this.wareHouseReceipt.code}}</p>
+      </div>
+    </div>
     <nz-table  nzShowSizeChanger
                [nzData]="wareHouseReceiptDetails"
                [nzFrontPagination]="false"

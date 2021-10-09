@@ -12,11 +12,12 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.urlLinkImages = [
-      "https://cdn.tgdd.vn/2021/10/banner/fold3-830-300-830x300.png",
-      "https://cdn.tgdd.vn/2021/09/banner/reno6cb-830-300-830x300.png",
-      "https://cdn.tgdd.vn/2021/10/banner/830-300-830x300-1.png",
-      "https://cdn.tgdd.vn/2021/09/banner/830-300-830x300-16.png"
+      "./assets/images/slide/slide1.png",
+      "./assets/images/slide/slide2.png",
+      "./assets/images/slide/slide3.png",
+      "./assets/images/slide/slide4.png"
     ];
+    this.active = 0;
     this.setActiveImage();
   }
 

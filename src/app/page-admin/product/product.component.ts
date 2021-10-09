@@ -25,6 +25,10 @@ export class ProductComponent implements OnInit {
   addressSearch: any;
   categories: any;
   brandes: any;
+  categoriesSearch: any;
+  brandesSearch: any;
+  categoriesPopup: any;
+  brandesPopup: any;
   idCat: any;
   idBra: any;
   fileList1 = [];
@@ -42,6 +46,10 @@ export class ProductComponent implements OnInit {
     this.isOkLoading = false;
     this.brandes = [];
     this.categories = [];
+    this.brandesSearch = [];
+    this.categoriesSearch = [];
+    this.brandesPopup = [];
+    this.categoriesPopup = [];
     this.products = [];
     this.product = new Product();
     this.alertService.name = 'DANH SÁCH SẢN PHẨM';
@@ -54,6 +62,10 @@ export class ProductComponent implements OnInit {
     this.productService.loadCategoryAndBrand().subscribe(res => {
       this.brandes = res.body[1];
       this.categories = res.body[0];
+      this.brandesSearch = JSON.parse(JSON.stringify(this.brandes));
+      this.brandesPopup = JSON.parse(JSON.stringify(this.brandes));
+      this.categoriesSearch = JSON.parse(JSON.stringify(this.categories));
+      this.categoriesPopup = JSON.parse(JSON.stringify(this.categories));
     });
   }
 
@@ -89,6 +101,8 @@ export class ProductComponent implements OnInit {
 
   openModal(obj?): void {
     this.isVisible = true;
+    this.brandesPopup = JSON.parse(JSON.stringify(this.brandes));
+    this.categoriesPopup = JSON.parse(JSON.stringify(this.categories));
     if (obj) {
       this.titleModal = 'Sửa sản phẩm';
       this.product = Object.assign({}, obj);
@@ -99,7 +113,9 @@ export class ProductComponent implements OnInit {
           url: this.product.image,
           thumbUrl: this.product.image
         }
-      ]
+      ];
+      this.categoriesPopup = this.categoriesPopup.filter(n => n.id === this.product.idCat);
+      this.brandesPopup = this.brandesPopup.filter(n => n.idCat === this.product.idCat);
     } else {
       this.titleModal = 'Thêm sản phẩm';
       this.product = new Product();
@@ -152,8 +168,8 @@ export class ProductComponent implements OnInit {
     this.productService.save(this.product, this.fileList1[0]).subscribe(res => {
       this.isVisible = false;
       this.isOkLoading = false;
-      if (res.message) {
-        this.alertService.error(res.message);
+      if (res.body.message) {
+        this.alertService.error(res.body.message);
         return;
       }
       this.alertService.success('Thao tác thực hiện thành công');
@@ -174,8 +190,9 @@ export class ProductComponent implements OnInit {
   }
 
   clearText(): void {
-    this.addressSearch = '';
-    this.nameSearch = '';
+    this.idCat = null;
+    this.idBra = null;
+    this.nameSearch = null;
     this.pageIndex = 1;
     this.pageSize = 10;
     this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '', idCat: null, idBra: null }));
@@ -218,5 +235,35 @@ export class ProductComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  changeCategorySearch() {
+    this.idBra = null;
+    if (this.idCat) {
+      this.brandesSearch = this.brandes.filter(n => n.idCat === this.idCat);
+    } else {
+      this.brandesSearch = JSON.parse(JSON.stringify(this.brandes));
+    }
+  }
+
+  changeBrandSearch() {
+    if (!this.idCat && this.idBra) {
+      this.idCat = this.brandesSearch.find(n => n.id === this.idBra).idCat;
+    }
+  }
+
+  changeCategoryPopup() {
+    this.product.idBra = null;
+    if (this.product.idCat) {
+      this.brandesPopup = this.brandes.filter(n => n.idCat === this.product.idCat);
+    } else {
+      this.brandesPopup = JSON.parse(JSON.stringify(this.brandes));
+    }
+  }
+
+  changeBrandPopup() {
+    if (!this.product.idCat && this.product.idBra) {
+      this.product.idCat = this.brandesSearch.find(n => n.id === this.product.idBra).idCat;
+    }
   }
 }

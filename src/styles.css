@@ -521,13 +521,16 @@
 .product-style-tab {
   position: relative;
 }
+.product-style-tab .product-tab-list .tab-style {
+  margin-bottom: 0;
+}
 .product-slider-active.owl-carousel .owl-nav div {
   font-size: 25px;
   opacity: 1;
   position: absolute;
   right: 45px;
   text-align: center;
-  top: -37px;
+  top: -45px;
   transition: all 0.3s ease 0s;
   visibility: visible;
   width: 30px;
@@ -4288,6 +4291,9 @@ a.shipping-calculator-button:hover {
 
 .testimonial-3-img {
   margin-right: 20px;
+}
+.product-categories-all .product-categories-title h3 {
+  margin-bottom: 0;
 }
 
 .testimonial-rating i {
