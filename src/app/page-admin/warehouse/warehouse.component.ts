@@ -162,7 +162,6 @@ export class WarehouseComponent implements OnInit {
       this.wards = [];
       this.loadMoreWard(searchText);
     }
-
   }
 
   loadMoreProvince(searchText?: string) {

@@ -25,8 +25,7 @@ registerLocaleData(vi);
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    PagesModule
+    BrowserAnimationsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]

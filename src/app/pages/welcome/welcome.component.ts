@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProductService} from "../../page-admin/product/product.service";
 
 @Component({
   selector: 'app-welcome',
@@ -8,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class WelcomeComponent implements OnInit {
   urlLinkImages: any;
   active: any;
-  constructor() { }
+  categories: any;
+  brandes: any;
+  products: any;
+  brandesShow: any;
+  pageBrand: any;
+
+  constructor(
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
     this.urlLinkImages = [
@@ -17,8 +26,14 @@ export class WelcomeComponent implements OnInit {
       "./assets/images/slide/slide3.png",
       "./assets/images/slide/slide4.png"
     ];
+    this.brandesShow = [];
+    this.brandes = [];
+    this.categories = [];
+    this.products = [];
+    this.pageBrand = [];
     this.active = 0;
     this.setActiveImage();
+    this.loadCategoryAndBrand();
   }
 
   setActiveImage() {
@@ -45,5 +60,43 @@ export class WelcomeComponent implements OnInit {
         this.active--;
       }
     }
+  }
+
+  loadCategoryAndBrand() {
+    this.productService.loadCategoryAndBrand().subscribe(res => {
+      this.brandes = res.body[1].sort((a, b) =>  a.id - b.id);
+      this.categories = res.body[0].sort((a, b) => a.id - b.id);
+      this.categories.forEach(n => {
+        this.brandesShow.push(this.brandes.find(m => m.idCat === n.id).id);
+        this.pageBrand.push(0);
+      });
+      this.getProductDefaultForWelcome(this.brandes.map(n => n.id));
+    });
+  }
+
+  getProductDefaultForWelcome(idBra) {
+    this.productService.getProductDefaultForWelcome(idBra).subscribe(res => {
+      this.products = res;
+      for (let item of this.products) {
+        item.image = 'data:image/jpeg;base64,' + item.image;
+      }
+    });
+  }
+
+  getBrandFollowUpCategory(index) {
+    return this.brandes.filter(n => n.idCat === index);
+  }
+
+  getProductFollowUpBrandAndCategory(id, index) {
+    return this.products.filter(n => n.idCat === id && n.idBra === this.brandesShow[index]);
+  }
+
+  changePageBrand(index) {
+    this.pageBrand[index] = this.pageBrand[index] === 0 ? 1 : 0;
+  }
+
+  changeBrand(index, id) {
+    this.pageBrand[index] = 0;
+    this.brandesShow[index] = id;
   }
 }

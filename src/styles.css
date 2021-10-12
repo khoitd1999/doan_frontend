@@ -254,7 +254,7 @@
 }
 .product__details h2 {
   color: #444444;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 .product__details {
@@ -2417,7 +2417,7 @@ select.select-color {
 }
 .product__desc p {
   color: #666666;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 26px;
 }
 .product__desc {

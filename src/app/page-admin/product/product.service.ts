@@ -30,12 +30,6 @@ export class ProductService {
     return this.http.get<any>(this.sourceUrl + '/load-all');
   }
 
-  checkBeforeDelete(req): Observable<any> {
-    const params = new HttpParams()
-      .append('id', `${req}`);
-    return this.http.get<any>(this.sourceUrl + '/check-before-delete', {params});
-  }
-
   save(req, image): Observable<any> {
     const formData = new FormData();
     if (image && image.size) {
@@ -45,13 +39,23 @@ export class ProductService {
     return this.http.post<any>(this.sourceUrl + '/save', formData, {observe: 'response'}).pipe(catchError(() => of({data: []})));
   }
 
-  getAllArea(searchTerm): Observable<any> {
-    const params = new HttpParams()
-      .append('searchTerm', `${searchTerm}`);
-    return this.http.get<any>(this.sourceUrl + '/get-address', {params}).pipe(catchError(() => of({data: []})));
+  getProductDefaultForWelcome(listID): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/get-product-default-for-welcome', listID).pipe(catchError(() => of({data: []})));
   }
 
   loadCategoryAndBrand(): Observable<any> {
     return this.http.get<any>(this.sourceUrl + '/get-brand-category');
+  }
+
+  loadBrand(idCat): Observable<any> {
+    const params = new HttpParams()
+      .append('idCat', `${idCat}`)
+    return this.http.get<any>(this.sourceUrl + '/get-brand', {params});
+  }
+
+  findById(id): Observable<any> {
+    const params = new HttpParams()
+      .append('id', `${id}`)
+    return this.http.get<any>(this.sourceUrl + '/find-by-id', {params});
   }
 }

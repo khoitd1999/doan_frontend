@@ -2,17 +2,19 @@ import {NgModule} from '@angular/core';
 
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
-import {RouterModule} from "@angular/router";
+import {PagesComponent} from "./pages.component";
+import {PagesRoutingModule} from "./pages-routing.module";
+import {registerLocaleData} from "@angular/common";
+import localeVi from "@angular/common/locales/vi";
 
+registerLocaleData(localeVi, 'vi-VN');
 
 @NgModule({
   imports: [
-    RouterModule
+    PagesRoutingModule
   ],
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [PagesComponent, HeaderComponent, FooterComponent],
   exports: [
-    HeaderComponent,
-    FooterComponent
   ]
 })
 export class PagesModule {
