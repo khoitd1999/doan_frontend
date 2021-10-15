@@ -92,7 +92,7 @@
           </div>
           <div nz-col nzSpan="10">
             <nz-select style="width: 100%" nzShowSearch [(ngModel)]="warehouse.idPro" nzPlaceHolder="Chọn tỉnh, thành phố"
-                       nzAllowClear (nzOnSearch)="onSearch($event)" (ngModelChange)="onSearch(null)" [nzServerSearch]=true>
+                       nzAllowClear (nzOnSearch)="onSearch($event)" (ngModelChange)="warehouse.idDis = null; onSearch(null)" [nzServerSearch]=true>
               <nz-option *ngFor="let option of provinces" [nzValue]="option.code" [nzLabel]="option.name"></nz-option>
             </nz-select>
           </div>
@@ -103,7 +103,7 @@
           </div>
           <div nz-col nzSpan="10">
             <nz-select style="width: 100%" nzShowSearch [(ngModel)]="warehouse.idDis" nzPlaceHolder="Chọn quận huyện"
-                       nzAllowClear (nzOnSearch)="onSearch($event)" (ngModelChange)="onSearch(null)" [nzServerSearch]=true [nzDisabled]="!warehouse.idPro || (warehouse.idPro && warehouse.idPro === '')">
+                       nzAllowClear (nzOnSearch)="onSearch($event)" (ngModelChange)="warehouse.idWar = null; onSearch(null)" [nzServerSearch]=true [nzDisabled]="!warehouse.idPro || (warehouse.idPro && warehouse.idPro === '')">
               <nz-option *ngFor="let option of districts" [nzValue]="option.code" [nzLabel]="option.name"></nz-option>
             </nz-select>
           </div>

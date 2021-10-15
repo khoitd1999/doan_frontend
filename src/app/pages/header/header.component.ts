@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,15 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
-  constructor() { }
+  client: any;
+  constructor(
+    private route: Router
+  ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('client') !== null) {
+      this.client = JSON.parse(sessionStorage.getItem('client'));
+    }
     window.addEventListener('scroll', this.scrollWindow, true);
   }
 
@@ -21,6 +27,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       header.classList.add("scroll-header");
     }
+  }
+
+  changeStatus() {
+    if (this.client) {
+      sessionStorage.removeItem('client');
+      sessionStorage.removeItem('cart');
+    }
+    this.route.navigate(['/pages/login']);
   }
 
   ngOnDestroy(): void {

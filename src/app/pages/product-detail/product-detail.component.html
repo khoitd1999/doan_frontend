@@ -57,15 +57,7 @@
           </ul>
           <div class="product-action-wrap">
             <div class="prodict-statas"><span>Quantity :</span></div>
-<!--            <div class="product-quantity">-->
-<!--              <div class="product-quantity">-->
-<!--                <div class="cart-plus-minus">-->
-<!--                  <input class="cart-plus-minus-box" type="text" name="quantity" [(ngModel)]="quantity">-->
-<!--                  <div class="dec qtybutton" (click)="subtractQuantity()" style="cursor: pointer">-</div>-->
-<!--                  <div class="inc qtybutton" (click)="addQuantity()" style="cursor: pointer">+</div></div>-->
-<!--              </div>-->
-<!--            </div>-->
-            <div class="choosenumber" fragment="159df23838a">
+            <div class="choosenumber">
               <div class="minus" style="pointer-events: all;" (click)="subtractQuantity()">
                 <i style="background-color: rgb(40, 138, 214);"></i>
               </div>
@@ -78,7 +70,7 @@
             </div>
           </div>
           <ul class="pro__dtl__btn">
-            <li class="buy__now__btn"><a href="#">Mua ngay</a></li>
+            <li class="buy__now__btn"><a (click)="addToCart()">Thêm vào giỏ</a></li>
           </ul>
           <div class="pro__social__share">
             <h2>Share :</h2>

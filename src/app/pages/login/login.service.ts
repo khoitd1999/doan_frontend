@@ -6,16 +6,20 @@ import {catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginAdminService {
+export class LoginService {
   private sourceUrl = 'http://localhost:8081/login';
 
   constructor(private http: HttpClient) {
   }
 
-    checkLogin(username, password): Observable<any> {
+  checkLogin(phone, password): Observable<any> {
     const params = new HttpParams()
-      .append('username', `${username}`)
+      .append('phone', `${phone}`)
       .append('password', `${password}`);
-    return this.http.post<any>(this.sourceUrl + '/check-login-admin', null,{ params }).pipe(catchError(() => of({ data: [] })));
+    return this.http.post<any>(this.sourceUrl + '/check-login', null, {params}).pipe(catchError(() => of({data: []})));
+  }
+
+  registerClient(client): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/register', client).pipe(catchError(() => of({data: []})));
   }
 }
