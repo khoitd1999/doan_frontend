@@ -37,6 +37,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.prices = [];
     this.products = [];
     this.isLoadMore = true;

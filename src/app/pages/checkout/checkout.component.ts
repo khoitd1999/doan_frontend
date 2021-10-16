@@ -3,6 +3,11 @@ import {Bill} from "../../entity/bill";
 import {WarehouseService} from "../../page-admin/warehouse/warehouse.service";
 import {Status_Bill, TypeShip} from "../../app.constant";
 import {CheckoutService} from "./checkout.service";
+import {NzModalService} from "ng-zorro-antd";
+import {CurrencyPipe} from "@angular/common";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {NotificationService} from "../../UtilsService/notification.service";
 
 @Component({
   selector: 'app-welcome',
@@ -32,7 +37,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private warehouseService: WarehouseService,
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private modal: NzModalService,
+    private currencyPipe: CurrencyPipe,
+    private route: Router,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -138,7 +147,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    sessionStorage.setItem('cart', JSON.stringify(this.carts));
+    if (sessionStorage.getItem('cart')) {
+      sessionStorage.setItem('cart', JSON.stringify(this.carts));
+    }
   }
 
   calculateFee() {
@@ -232,7 +243,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.bill.idWar = warehouse.id;
     }
     this.checkoutService.save(this.bill).subscribe(res => {
+      this.notificationService.sendMessage('hello khôi');
+      // let address = '';
+      // if (res.body.addressClient) {
+      //   address = '- Giao hàng đến nơi: ' + res.body.addressClient;
+      // } else {
+      //   address = '- Nhận hàng tại cửa hàng: ' + res.body.addressWarehouse;
+      // }
+      // let totalAmount = this.currencyPipe.transform(res.body.totalAmount, 'VND','symbol', '1.0-0', 'vi-VN');
+      // this.modal.success({
+      //   nzTitle: 'ĐẶT HÀNG THÀNH CÔNG',
+      //   nzContent: `
+      //     MÃ ĐƠN HÀNG: ${res.body.id} <br/>
+      //     - Người nhận hàng: ${this.client.fullName}, ${this.client.phone} <br/>
+      //     ${address} <br/>
+      //     - Tổng tiền: ${totalAmount}
+      //   `,
+      //   nzOkText: 'OK',
+      //   nzOnOk: () => this.backToHome()
+      // });
 
     });
+  }
+
+  backToHome() {
+    sessionStorage.removeItem('cart');
+    this.route.navigate(['/pages/welcome']);
   }
 }

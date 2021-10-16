@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import {PagesModule} from "./pages/pages.module";
+import {NotificationService} from "./UtilsService/notification.service";
 
 registerLocaleData(vi);
 
@@ -27,7 +28,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: vi_VN }],
+  providers: [{ provide: NZ_I18N, useValue: vi_VN }, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

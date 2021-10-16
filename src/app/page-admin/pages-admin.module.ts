@@ -7,6 +7,7 @@ import {CustomDatePipe} from "../UtilsService/custom.datepipe";
 import {registerLocaleData} from "@angular/common";
 import localeVi from '@angular/common/locales/vi';
 import {AuthGuard} from "../UtilsService/auth.guard";
+import {NotificationService} from "../UtilsService/notification.service";
 
 registerLocaleData(localeVi, 'vi-VN');
 
