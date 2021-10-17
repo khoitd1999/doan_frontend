@@ -31,6 +31,10 @@ const routes: Routes = [
         path: 'checkout',
         loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule)
       },
+      {
+        path: 'search-bill',
+        loadChildren: () => import('./search-bill/search-bill.module').then(m => m.SearchBillModule)
+      },
     ],
   }
   ,

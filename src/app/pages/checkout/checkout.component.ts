@@ -8,6 +8,8 @@ import {CurrencyPipe} from "@angular/common";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {NotificationService} from "../../UtilsService/notification.service";
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-welcome',
@@ -34,6 +36,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   deliveryCharge: any;
   typeShip: string;
   street: any;
+  private stompClient = null;
 
   constructor(
     private warehouseService: WarehouseService,
@@ -56,6 +59,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.typeShip = this.GIAO_HANG_TAN_NOI;
     this.client = JSON.parse(sessionStorage.getItem('client'));
     this.loadMoreProvince(null);
+    this.connect();
   }
 
   loadMoreProvince(searchText?: string) {
@@ -150,6 +154,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (sessionStorage.getItem('cart')) {
       sessionStorage.setItem('cart', JSON.stringify(this.carts));
     }
+    this.disconnect();
   }
 
   calculateFee() {
@@ -243,25 +248,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.bill.idWar = warehouse.id;
     }
     this.checkoutService.save(this.bill).subscribe(res => {
-      this.notificationService.sendMessage('hello khôi');
-      // let address = '';
-      // if (res.body.addressClient) {
-      //   address = '- Giao hàng đến nơi: ' + res.body.addressClient;
-      // } else {
-      //   address = '- Nhận hàng tại cửa hàng: ' + res.body.addressWarehouse;
-      // }
-      // let totalAmount = this.currencyPipe.transform(res.body.totalAmount, 'VND','symbol', '1.0-0', 'vi-VN');
-      // this.modal.success({
-      //   nzTitle: 'ĐẶT HÀNG THÀNH CÔNG',
-      //   nzContent: `
-      //     MÃ ĐƠN HÀNG: ${res.body.id} <br/>
-      //     - Người nhận hàng: ${this.client.fullName}, ${this.client.phone} <br/>
-      //     ${address} <br/>
-      //     - Tổng tiền: ${totalAmount}
-      //   `,
-      //   nzOkText: 'OK',
-      //   nzOnOk: () => this.backToHome()
-      // });
+      this.sendNotification(res.body.id);
+      let address = '';
+      if (res.body.addressClient) {
+        address = '- Giao hàng đến nơi: ' + res.body.addressClient;
+      } else {
+        address = '- Nhận hàng tại cửa hàng: ' + res.body.addressWarehouse;
+      }
+      let totalAmount = this.currencyPipe.transform(res.body.totalAmount, 'VND','symbol', '1.0-0', 'vi-VN');
+      this.modal.success({
+        nzTitle: 'ĐẶT HÀNG THÀNH CÔNG',
+        nzContent: `
+          MÃ ĐƠN HÀNG: ${res.body.id} <br/>
+          - Người nhận hàng: ${this.client.fullName}, ${this.client.phone} <br/>
+          ${address} <br/>
+          - Tổng tiền: ${totalAmount}
+        `,
+        nzOkText: 'OK',
+        nzOnOk: () => this.backToHome()
+      });
+
 
     });
   }
@@ -269,5 +275,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   backToHome() {
     sessionStorage.removeItem('cart');
     this.route.navigate(['/pages/welcome']);
+  }
+
+  connect() {
+    const socket = new SockJS('http://localhost:8081/gkz-stomp-endpoint');
+    this.stompClient = Stomp.Stomp.over(socket);
+    this.stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+    });
+  }
+
+  disconnect() {
+    if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+  }
+
+  sendNotification(id) {
+    this.stompClient.send(
+      '/gkz/hello',
+      {},
+      JSON.stringify({'notification': `Đơn hàng có mã ${id} vừa được tạo mới`})
+    );
   }
 }

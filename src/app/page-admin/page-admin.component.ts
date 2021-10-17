@@ -3,6 +3,8 @@ import {Router} from "@angular/router";
 import {AlertService} from "../UtilsService/alert.service";
 import {NotificationService} from "../UtilsService/notification.service";
 import {Subscription} from "rxjs";
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-welcome',
@@ -13,6 +15,7 @@ export class PageAdminComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   user: any;
   subscription: Subscription;
+  private stompClient = null;
 
   constructor(private route: Router,
               public alertService: AlertService,
@@ -21,11 +24,7 @@ export class PageAdminComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('employee'));
-    this.subscription = this.notificationService.currentMessage.subscribe(msg =>  {
-      if (msg) {
-        this.alertService.success(msg);
-      }
-    });
+    this.connect();
   }
 
   logout() {
@@ -37,6 +36,30 @@ export class PageAdminComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.disconnect();
   }
 
+  connect() {
+    const socket = new SockJS('http://localhost:8081/gkz-stomp-endpoint');
+    this.stompClient = Stomp.Stomp.over(socket);
+
+    const _this = this;
+    this.stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+
+      _this.stompClient.subscribe('/topic/hi', function (hello) {
+        if (hello.body) {
+          const res = JSON.parse(hello.body);
+          _this.alertService.success(res.notification);
+        }
+      });
+    });
+  }
+
+  disconnect() {
+    if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+    console.log('Disconnected!');
+  }
 }
