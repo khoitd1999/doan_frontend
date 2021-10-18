@@ -183,6 +183,6 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/pages_admin/nhap-kho']);
+    this.router.navigate(['/pages_admin/import']);
   }
 }

@@ -128,9 +128,9 @@ export class WarehouseReceiptComponent implements OnInit {
 
   redirectToDetail(id?) {
     if (id) {
-      this.router.navigate(['/pages_admin/nhap-kho/', id, 'edit']);
+      this.router.navigate(['/pages_admin/import/', id, 'edit']);
     } else {
-      this.router.navigate(['/pages_admin/nhap-kho/new']);
+      this.router.navigate(['/pages_admin/import/new']);
     }
   }
 

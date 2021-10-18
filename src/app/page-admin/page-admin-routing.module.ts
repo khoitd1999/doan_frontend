@@ -22,9 +22,13 @@ const routes: Routes = [
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
       },
       {
-        path: 'nhap-kho',
+        path: 'import',
         loadChildren: () => import('./warehousereceipt/warehouse-receipt.module').then(m => m.WarehouseReceiptModule)
-      }
+      },
+      {
+        path: 'bill',
+        loadChildren: () => import('./bill/bill.module').then(m => m.BillModule)
+      },
     ],
   },
   {
