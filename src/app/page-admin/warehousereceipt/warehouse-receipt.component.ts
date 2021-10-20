@@ -32,6 +32,7 @@ export class WarehouseReceiptComponent implements OnInit {
   idWar: any;
   idEmp: any;
   dateFormat = 'dd/MM/yyyy';
+  type: any;
 
   constructor(
     private warehouseReceiptService: WarehouseReceiptService,
@@ -39,7 +40,13 @@ export class WarehouseReceiptComponent implements OnInit {
     private modal: NzModalService,
     private router: Router
     // private alertService: AlertService
-  ) { }
+  ) {
+    if (this.router.url.includes('import')) {
+      this.type = 1;
+    } else {
+      this.type = 2;
+    }
+  }
 
   ngOnInit(): void {
     this.isVisible = false;
@@ -51,7 +58,7 @@ export class WarehouseReceiptComponent implements OnInit {
     this.wareHouseReceiptDetails = [];
     // this.alertService.name = 'QUẢN LÝ NHẬP KHO';
     this.loadEmployeeAndWareHouse();
-    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp}));
+    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp, type: this.type}));
     // this.loadMore(null, null);
   }
 
@@ -96,7 +103,7 @@ export class WarehouseReceiptComponent implements OnInit {
     } else {
       this.pageIndex = index;
     }
-    const searchTerm = JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp });
+    const searchTerm = JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp, type: this.type });
     this.loadDataFromServer(this.pageIndex, this.pageSize, searchTerm);
   }
 
@@ -113,7 +120,7 @@ export class WarehouseReceiptComponent implements OnInit {
   searchPagination(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
-    const searchTerm = JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp });
+    const searchTerm = JSON.stringify({ idWar: this.idWar, idEmp: this.idEmp, type: this.type });
     this.loadDataFromServer(this.pageIndex, this.pageSize, searchTerm);
   }
 
@@ -122,15 +129,23 @@ export class WarehouseReceiptComponent implements OnInit {
     this.idEmp = null;
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ idWar: null, idEmp: null }));
+    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ idWar: null, idEmp: null, type: this.type }));
   }
 
 
   redirectToDetail(id?) {
     if (id) {
-      this.router.navigate(['/pages_admin/import/', id, 'edit']);
+      if (this.type === 1) {
+        this.router.navigate(['/pages_admin/import/', id, 'edit']);
+      } else {
+        this.router.navigate(['/pages_admin/export/', id, 'edit']);
+      }
     } else {
-      this.router.navigate(['/pages_admin/import/new']);
+      if (this.type === 1) {
+        this.router.navigate(['/pages_admin/import/new']);
+      } else {
+        this.router.navigate(['/pages_admin/export/new']);
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {WarehouseReceiptService} from "./warehouse-receipt.service";
+import {WarehouseReceiptService} from "../warehousereceipt/warehouse-receipt.service";
 import {AlertService} from "../../UtilsService/alert.service";
 import {NzModalService} from "ng-zorro-antd";
 import {WareHouseReceipt} from "../../entity/warehousereceipt";
@@ -10,10 +10,10 @@ import {TypeReceipt} from "../../app.constant";
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './warehouse-receipt-update.component.html',
-  styleUrls: ['./warehouse-receipt-update.component.css']
+  templateUrl: './bill-update.component.html',
+  styleUrls: ['./bill-update.component.css']
 })
-export class WarehouseReceiptUpdateComponent implements OnInit {
+export class BillUpdateComponent implements OnInit {
   wareHouseReceipts: any;
   total = 0;
   loading = false;
@@ -36,9 +36,7 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
   i = 0;
   editId: string | null = null;
   products: any;
-  type: any;
-  IMPORT = TypeReceipt.IMPORT;
-  EXPORT = TypeReceipt.EXPORT;
+  bill: any;
 
   constructor(
     private warehouseReceiptService: WarehouseReceiptService,
@@ -47,11 +45,6 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    if (this.router.url.includes('import')) {
-      this.type = TypeReceipt.IMPORT;
-    } else {
-      this.type = TypeReceipt.EXPORT;
-    }
   }
 
   ngOnInit(): void {
@@ -65,8 +58,20 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
     this.wareHouseReceiptDetails = [];
     // this.alertService.name = 'QUẢN LÝ NHẬP KHO';
     this.activatedRoute.data.subscribe(data => {
-      if (data.warehouseReceipt && data.warehouseReceipt.id) {
-        this.wareHouseReceipt = data.warehouseReceipt;
+      if (data.bill && data.bill.id) {
+        this.bill = data.bill;
+        console.log(this.bill);
+        this.wareHouseReceipt = new WareHouseReceipt();
+        this.wareHouseReceipt.code = 'EX' + this.bill.id;
+        this.wareHouseReceipt.idWar = this.bill.idWar;
+        this.wareHouseReceipt.totalAmount = this.bill.totalAmount;
+        this.wareHouseReceipt.type = TypeReceipt.EXPORT;
+        this.wareHouseReceipt.fee = this.bill.fee;
+        this.wareHouseReceipt.wareHouseReceiptDetails = [];
+        this.wareHouseReceipt.idBil = this.bill.id;
+        for (let item of this.bill.carts) {
+          this.wareHouseReceipt.wareHouseReceiptDetails.push({idPro: item.idPro, namePro: item.namePro, quantity: item.quantity, price: item.price, amount: item.amount});
+        }
         this.wareHouseReceiptDetails = this.wareHouseReceipt.wareHouseReceiptDetails;
       } else {
 
@@ -94,7 +99,7 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
       this.alertService.error('Chưa nhập mã nhập kho');
       return true;
     } else if (!this.wareHouseReceipt.date) {
-      this.alertService.error('Chưa chọn ngày nhập kho');
+      this.alertService.error('Chưa chọn ngày xuất kho');
       return true;
     } else if (!this.wareHouseReceipt.idEmp) {
       this.alertService.error('Chưa chọn nhân viên thực hiện');
@@ -102,25 +107,6 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
     } else if (!this.wareHouseReceipt.idWar) {
       this.alertService.error('Chưa chọn kho nhập');
       return true;
-    }
-    if (this.wareHouseReceiptDetails.length === 0) {
-      this.alertService.error('Chưa nhập chi tiết cho phiếu');
-      return true;
-    }
-    for (let i = 0; i < this.wareHouseReceiptDetails.length; i++) {
-      const item = this.wareHouseReceiptDetails[i];
-      if (!item.namePro) {
-        this.alertService.error('Hàng ' + (i + 1) + ' chưa chọn sản phẩm');
-        return true;
-      }
-      if (!item.quantity) {
-        this.alertService.error('Hàng ' + (i + 1) + ' chưa nhập số lượng');
-        return true;
-      }
-      if (!item.price) {
-        this.alertService.error('Hàng ' + (i + 1) + ' chưa nhập đơn giá');
-        return true;
-      }
     }
     return false;
   }
@@ -173,15 +159,7 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
     if (this.checkErr()) {
       return;
     }
-    let total = 0;
-    for (let i = 0; i < this.wareHouseReceiptDetails.length; i++) {
-      const item = this.wareHouseReceiptDetails[i];
-      total += item.amount;
-    }
-    this.wareHouseReceipt.totalAmount = total;
-    this.wareHouseReceipt.wareHouseReceiptDetails = this.wareHouseReceiptDetails;
-    this.wareHouseReceipt.type = 1;
-    this.warehouseReceiptService.save(this.wareHouseReceipt).subscribe(res => {
+    this.warehouseReceiptService.createExport(this.wareHouseReceipt).subscribe(res => {
       if (res.message) {
         this.alertService.error(res.message);
         return;
@@ -193,15 +171,6 @@ export class WarehouseReceiptUpdateComponent implements OnInit {
   }
 
   back() {
-    if (this.type === 1) {
-      this.router.navigate(['/pages_admin/import']);
-    } else {
-      if (sessionStorage.getItem('fromBill')) {
-        this.router.navigate(['/pages_admin/bill']);
-        sessionStorage.removeItem('fromBill');
-      } else {
-        this.router.navigate(['/pages_admin/export']);
-      }
-    }
+    this.router.navigate(['/pages_admin/bill']);
   }
 }

@@ -11,6 +11,8 @@ export interface IWareHouseReceipt {
   wareHouseReceiptDetails?: IWareHouseReceiptDetail[];
   nameEmp?: any;
   nameWar?: any;
+  idBil?: any;
+  fee?: any;
 }
 
 export class WareHouseReceipt implements IWareHouseReceipt {
@@ -24,7 +26,9 @@ export class WareHouseReceipt implements IWareHouseReceipt {
     public type?: any,
     public wareHouseReceiptDetails?: IWareHouseReceiptDetail[],
     public nameEmp?: any,
-    public nameWar?: any
+    public nameWar?: any,
+    public idBil?: any,
+    public fee?: any
   ) {
   }
 }

@@ -7,6 +7,7 @@ import {CommonModule, CurrencyPipe} from "@angular/common";
 import {NgZorroAntdModule, NzSelectModule} from "ng-zorro-antd";
 import {FormsModule} from "@angular/forms";
 import {PagesAdminModule} from "../../page-admin/pages-admin.module";
+import {BillUpdateComponent} from "./bill-update.component";
 
 
 @NgModule({
@@ -18,8 +19,8 @@ import {PagesAdminModule} from "../../page-admin/pages-admin.module";
     FormsModule,
     PagesAdminModule
   ],
-  declarations: [BillComponent],
-  exports: [BillComponent],
+  declarations: [BillComponent, BillUpdateComponent],
+  exports: [BillComponent, BillUpdateComponent],
   providers: [CurrencyPipe]
 })
 export class BillModule {

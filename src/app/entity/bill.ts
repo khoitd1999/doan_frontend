@@ -13,6 +13,7 @@ export interface IBill {
   carts?: any;
   idCli?: any;
   idWar?: any;
+  idWare?: any;
 }
 
 export class Bill implements IBill {
@@ -30,7 +31,8 @@ export class Bill implements IBill {
     public status?: any,
     public carts?: any,
     public idCli?: any,
-    public idWar?: any
+    public idWar?: any,
+    public idWare?: any
   ) {
   }
 }

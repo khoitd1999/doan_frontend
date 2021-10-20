@@ -26,6 +26,14 @@ const routes: Routes = [
         loadChildren: () => import('./warehousereceipt/warehouse-receipt.module').then(m => m.WarehouseReceiptModule)
       },
       {
+        path: 'inventory',
+        loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule)
+      },
+      {
+        path: 'export',
+        loadChildren: () => import('./warehousereceipt/warehouse-receipt.module').then(m => m.WarehouseReceiptModule)
+      },
+      {
         path: 'bill',
         loadChildren: () => import('./bill/bill.module').then(m => m.BillModule)
       },

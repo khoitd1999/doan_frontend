@@ -8,3 +8,8 @@ export enum Status_Bill {
   DA_GIAO_HANG = 1,
   DA_HUY= 2
 }
+
+export enum TypeReceipt {
+  IMPORT= 1,
+  EXPORT = 2
+}

@@ -4,6 +4,7 @@ import {BillService} from "./bill.service";
 import {Status_Bill, TypeShip} from "../../app.constant";
 import {NzModalService} from "ng-zorro-antd";
 import {AlertService} from "../../UtilsService/alert.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-welcome',
@@ -36,7 +37,8 @@ export class BillComponent implements OnInit, OnDestroy {
   constructor(
     private searchBillService: BillService,
     private alertService: AlertService,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private router: Router
   ) {
   }
 
@@ -158,5 +160,14 @@ export class BillComponent implements OnInit, OnDestroy {
     this.pageIndex = 1;
     this.pageSize = 10;
     this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ fromDateSearch: this.fromDateSearch, typeShipSearch: this.typeShipSearch, statusSearch: this.statusSearch }));
+  }
+
+  createExport(id: any) {
+    this.router.navigate(['/pages_admin/bill/', id, 'new']);
+  }
+
+  showWareHouseReceipt(idWare) {
+    sessionStorage.setItem('fromBill', 'fff');
+    this.router.navigate(['/pages_admin/export/', idWare, 'edit']);
   }
 }

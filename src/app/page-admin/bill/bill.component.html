@@ -64,28 +64,32 @@
       <tr>
         <th style="width: 10%">Ngày đặt mua</th>
         <th style="width: 5%">Mã đơn hàng</th>
-        <th style="width: 15%" align="center">Tổng tiền</th>
-        <th style="width: 15%">Hình thức giao hàng</th>
+        <th style="width: 10%" align="center">Tổng tiền</th>
+        <th style="width: 13%">Hình thức giao hàng</th>
         <th style="width: 30%">Địa chỉ nhận hàng</th>
-        <th style="width: 15%">Trạng thái đơn hàng</th>
+        <th style="width: 12%">Trạng thái đơn hàng</th>
         <th style="width: 10%">Tạo đơn xuất kho</th>
+        <th style="width: 10%">Xem đơn xuất kho</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of bills; let i = index" (click)="onSelect(i)">
         <td style="width: 10%"><p>{{ data.fromDate | customDate}}</p></td>
         <td style="width: 5%"><p>{{ data.id }}</p></td>
-        <td style="width: 15%; text-align: center"><p>{{ data.totalAmount | currency: 'VND':'symbol':'1.0-0':'vi-VN' }}</p></td>
-        <td style="width: 15%"><p>{{ data.typeShip === GIAO_HANG_TAN_NOI ? 'Giao hàng tại nơi' : 'Nhận tại cửa hàng' }}</p></td>
+        <td style="width: 10%; text-align: center"><p>{{ data.totalAmount | currency: 'VND':'symbol':'1.0-0':'vi-VN' }}</p></td>
+        <td style="width: 13%"><p>{{ data.typeShip === GIAO_HANG_TAN_NOI ? 'Giao hàng tại nơi' : 'Nhận tại cửa hàng' }}</p></td>
         <td style="width: 30%" *ngIf="data.typeShip === GIAO_HANG_TAN_NOI"><p>{{ data.addressClient }}</p></td>
         <td style="width: 30%" *ngIf="data.typeShip === NHAN_TAI_CUA_HANG"><p>{{ data.addressWarehouse }}</p></td>
-        <td style="width: 15%">
+        <td style="width: 12%">
           <p *ngIf="data.status === DA_XAC_NHAN">Đã xác nhận</p>
           <p *ngIf="data.status === DA_GIAO_HANG">Đã giao hàng</p>
           <p *ngIf="data.status === DA_HUY">Đã hủy</p>
         </td>
         <td>
-          <i nz-icon nzType="export" style="margin-left: 15px;" *ngIf="data.status === DA_XAC_NHAN"></i>
+          <i nz-icon nzType="export" style="margin-left: 15px;" (click)="createExport(data.id)" *ngIf="data.status === DA_XAC_NHAN"></i>
+        </td>
+        <td>
+          <i nz-icon nzType="file-done" style="margin-left: 15px;" (click)="showWareHouseReceipt(data.idWare)" *ngIf="data.status === DA_GIAO_HANG"></i>
         </td>
       </tr>
       </tbody>

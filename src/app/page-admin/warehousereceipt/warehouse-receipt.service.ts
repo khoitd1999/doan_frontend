@@ -42,6 +42,11 @@ export class WarehouseReceiptService {
   save(req): Observable<any> {
     return this.http.post<any>(this.sourceUrl + '/save', req, {observe: 'response'});
   }
+
+  createExport(req): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/create-export', req, {observe: 'response'});
+  }
+
   loadEmployeeAndWareHouse(): Observable<any> {
     return this.http.get<any>(this.sourceUrl + '/get-employee-warehouse');
   }

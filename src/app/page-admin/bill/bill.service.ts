@@ -37,4 +37,9 @@ export class BillService {
   cancelOrder(req): Observable<any> {
     return this.http.post<any>(this.sourceUrl + '/cancel-order', req).pipe(catchError(() => of({data: []})));
   }
+
+  findById(id: any): Observable<any> {
+    return this.http
+      .get<any>(`${this.sourceUrl}/${id}`, { observe: 'response' });
+  }
 }
