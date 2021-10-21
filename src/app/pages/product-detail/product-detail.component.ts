@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {WarehouseService} from "../../page-admin/warehouse/warehouse.service";
 import {Cart} from "../../entity/cart";
 import {AlertService} from "../../UtilsService/alert.service";
+import {Comment, IComment} from "../../entity/comment";
 
 @Component({
   selector: 'app-welcome',
@@ -25,6 +26,10 @@ export class ProductDetailComponent implements OnInit {
   quantity: any;
   provinces: any;
   codePro: any;
+  comments: any;
+  comment: Comment;
+  rate = 0;
+  tooltips = ['Tồi tệ', 'Tệ', 'Bình thường', 'Tốt', 'Tuyệt vời'];
 
   constructor(
     private productService: ProductService,
@@ -40,14 +45,18 @@ export class ProductDetailComponent implements OnInit {
     window.scroll(0, 0);
     this.prices = [];
     this.products = [];
+    this.comments = [];
     this.isLoadMore = true;
     this.pageIndex = 1;
     this.pageSize = 8;
     this.quantity = 1;
+    this.active = true;
+    this.comment = new Comment();
     this.activatedRoute.data.subscribe(data => {
       if (data.product) {
         this.product = data.product;
         this.product.image = 'data:image/jpeg;base64,' + this.product.image;
+        this.getAllComment(this.product.id);
       }
     });
     this.loadProvince();
@@ -59,6 +68,11 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  getAllComment(id) {
+    this.productService.getAllComment(id).subscribe(res => {
+      this.comments = res;
+    })
+  }
 
   addQuantity() {
     this.quantity++;
@@ -99,5 +113,34 @@ export class ProductDetailComponent implements OnInit {
     sessionStorage.setItem('cart', JSON.stringify(carts));
     this.alertService.success('Thêm vào giỏ hàng thành công');
     this.route.navigate(['/pages']);
+  }
+
+  changeActive() {
+    this.active = !this.active;
+  }
+
+  submitComment() {
+    if (this.checkErrComment()) {
+      return;
+    }
+    this.comment.idPro = this.product.id;
+    this.productService.submitComment(this.comment).subscribe(res => {
+      this.product.rate = res;
+      this.getAllComment(this.product.id);
+      this.comment = new Comment();
+      this.comment.rate = 0;
+      this.comment.idPro = this.product.id;
+    });
+  }
+
+  checkErrComment() {
+    if (!this.comment.nameCli) {
+      this.alertService.error('Chưa nhập tên');
+      return true;
+    } else if (!this.comment.comment) {
+      this.alertService.error('Chưa nhập đánh giá');
+      return true;
+    }
+    return false;
   }
 }

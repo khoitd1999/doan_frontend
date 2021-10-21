@@ -58,4 +58,14 @@ export class ProductService {
       .append('id', `${id}`)
     return this.http.get<any>(this.sourceUrl + '/find-by-id', {params});
   }
+
+  getAllComment(id): Observable<any> {
+    const params = new HttpParams()
+      .append('id', `${id}`);
+    return this.http.get<any>(this.sourceUrl + '/get-all-comment', {params});
+  }
+
+  submitComment(comment): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/submit-comment', comment).pipe(catchError(() => of({data: []})));
+  }
 }

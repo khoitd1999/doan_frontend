@@ -12,6 +12,7 @@ export interface IProduct {
   date?: any;
   image?: any;
   status?: boolean;
+  rate?: any;
 }
 
 export class Product implements IProduct {
@@ -28,7 +29,8 @@ export class Product implements IProduct {
     public battery?: string,
     public date?: any,
     public image?: any,
-    public status?: boolean
+    public status?: boolean,
+    public rate?: any
   ) {
   }
 }
