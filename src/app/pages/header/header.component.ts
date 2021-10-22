@@ -8,11 +8,13 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   client: any;
+  isTurnOnSearch: any;
   constructor(
     private route: Router
   ) { }
 
   ngOnInit() {
+    this.isTurnOnSearch = false;
     if (sessionStorage.getItem('client') !== null) {
       this.client = JSON.parse(sessionStorage.getItem('client'));
     }
@@ -41,4 +43,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.scrollWindow, true);
   }
 
+  turnOnSearch() {
+    const t: any = document.getElementById('searchText');
+    if (t.value) {
+      t.value = '';
+    }
+    this.isTurnOnSearch = !this.isTurnOnSearch;
+  }
+
+  navigateList() {
+  }
 }

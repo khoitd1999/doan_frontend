@@ -25,12 +25,16 @@ export class ListProductResolve implements Resolve<any> {
 
 const routes: Routes = [
   {
+    path: '',
+    component: ListProductComponent
+  },
+  {
     path: ':id',
     component: ListProductComponent,
     resolve: {
       brandes: ListProductResolve
     }
-  },
+  }
 ];
 
 @NgModule({

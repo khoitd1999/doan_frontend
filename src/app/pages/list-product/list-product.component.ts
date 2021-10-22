@@ -19,6 +19,7 @@ export class ListProductComponent implements OnInit {
   idCat: any;
   idBra: any;
   priceFilter: any;
+  isSearching: any;
 
   constructor(
     private productService: ProductService,
@@ -35,6 +36,7 @@ export class ListProductComponent implements OnInit {
       {id: 4, name: 'Từ 25 - 30 triệu'},
       {id: 5, name: 'Trên 30 triệu'},
     ];
+    this.isSearching = false;
     this.products = [];
     this.isLoadMore = false;
     this.pageIndex = 1;
@@ -46,12 +48,16 @@ export class ListProductComponent implements OnInit {
         this.brandes = data.brandes;
         this.idBra = this.brandes[0].id;
         this.loadAll();
+      } else {
+        this.isSearching = true;
+        this.loadAll();
       }
     });
   }
 
   loadAll() {
-    const searchTerm = JSON.stringify({ idBra: this.idBra, sizeCurrent: this.products.length, priceFilter: this.priceFilter });
+    const search: any = document.getElementById('searchText');
+    const searchTerm = JSON.stringify({ idBra: this.idBra, sizeCurrent: this.products.length, priceFilter: this.priceFilter, nameSearch: search.value });
     this.productService.loadAllData(this.pageIndex - 1, this.pageSize, searchTerm).subscribe(res => {
       // this.total = res.body[1];
       for (let item of res.body[0]) {
