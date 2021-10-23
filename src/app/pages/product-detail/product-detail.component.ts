@@ -5,6 +5,7 @@ import {WarehouseService} from "../../page-admin/warehouse/warehouse.service";
 import {Cart} from "../../entity/cart";
 import {AlertService} from "../../UtilsService/alert.service";
 import {Comment, IComment} from "../../entity/comment";
+import {InventoryService} from "../../page-admin/inventory/inventory.service";
 
 @Component({
   selector: 'app-welcome',
@@ -30,13 +31,15 @@ export class ProductDetailComponent implements OnInit {
   comment: Comment;
   rate = 0;
   tooltips = ['Tồi tệ', 'Tệ', 'Bình thường', 'Tốt', 'Tuyệt vời'];
+  quantityInInventory = 0;
 
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private warehouseService: WarehouseService,
     private alertService: AlertService,
-    private route: Router
+    private route: Router,
+    private inventoryService: InventoryService
   ) {
 
   }
@@ -57,9 +60,9 @@ export class ProductDetailComponent implements OnInit {
         this.product = data.product;
         this.product.image = 'data:image/jpeg;base64,' + this.product.image;
         this.getAllComment(this.product.id);
+        this.loadProvince();
       }
     });
-    this.loadProvince();
   }
 
   subtractQuantity() {
@@ -83,7 +86,20 @@ export class ProductDetailComponent implements OnInit {
       JSON.stringify({ code: null })).subscribe(res => {
       this.provinces = res;
       this.codePro = this.provinces.find(n => n.name === 'Thành phố Hà Nội').code;
+      this.getQuantityInventory();
     });
+  }
+
+  getQuantityInventory() {
+    this.quantityInInventory = 0;
+    if (this.codePro) {
+      this.inventoryService.getQuantityInventory(JSON.stringify({codeProvince: this.codePro})).subscribe(res => {
+        this.quantityInInventory = res;
+        if (this.quantityInInventory === 0) {
+          this.quantity = 1;
+        }
+      });
+    }
   }
 
   addToCart() {

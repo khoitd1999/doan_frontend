@@ -24,17 +24,20 @@
           <div nz-row style="margin-top: 20px;">
             <div nz-col nzSpan="3" style="margin-top: 6px;">GIÁ TẠI: </div>
             <div nz-col nzSpan="10">
-              <nz-select [(ngModel)]="codePro" style="width: 100%" nzPlaceHolder="Tỉnh thành"
+              <nz-select [(ngModel)]="codePro" (ngModelChange)="getQuantityInventory()" style="width: 100%" nzPlaceHolder="Tỉnh thành"
                          nzAllowClear>
                 <nz-option *ngFor="let option of provinces" [nzValue]="option.code" [nzLabel]="option.name"></nz-option>
               </nz-select>
             </div>
             <div nz-col nzSpan="11"></div>
           </div>
-          <ul class="pro__dtl__prize">
+          <ul class="pro__dtl__prize" *ngIf="quantityInInventory > 0">
             <li style="font-weight: 500">{{product.price | currency: 'VND':'symbol':'1.0-0':'vi-VN'}}</li>
           </ul>
-          <div class="product-action-wrap">
+          <ul class="pro__dtl__prize" *ngIf="quantityInInventory === 0">
+            <li style="font-weight: 500">Hiện tại không có hàng</li>
+          </ul>
+          <div class="product-action-wrap" *ngIf="quantityInInventory > 0">
             <div class="prodict-statas"><span>Quantity :</span></div>
             <div class="choosenumber">
               <div class="minus" style="pointer-events: all;" (click)="subtractQuantity()">
@@ -49,7 +52,8 @@
             </div>
           </div>
           <ul class="pro__dtl__btn">
-            <li class="buy__now__btn"><a (click)="addToCart()">Thêm vào giỏ</a></li>
+            <li class="buy__now__btn" *ngIf="quantityInInventory === 0"><a disabled>Thêm vào giỏ</a></li>
+            <li class="buy__now__btn" *ngIf="quantityInInventory > 0"><a (click)="addToCart()">Thêm vào giỏ</a></li>
           </ul>
           <div class="pro__social__share">
             <h2>Share :</h2>

@@ -26,41 +26,13 @@ export class InventoryService {
       .pipe(catchError(() => of({data: []})));
   }
 
-  loadAll(): Observable<any> {
-    return this.http.get<any>(this.sourceUrl + '/load-all').pipe(catchError(() => of({data: []})));
-  }
-
-  checkBeforeDelete(req): Observable<any> {
-    const params = new HttpParams()
-      .append('id', `${req}`);
-    return this.http.get<any>(this.sourceUrl + '/check-before-delete', {params});
-  }
-
   save(req): Observable<any> {
     return this.http.post<any>(this.sourceUrl + '/save', req).pipe(catchError(() => of({data: []})));
   }
 
-  getAllArea(searchTerm): Observable<any> {
+  getQuantityInventory(req): Observable<any> {
     const params = new HttpParams()
-      .append('searchTerm', `${searchTerm}`);
-    return this.http.get<any>(this.sourceUrl + '/get-address', {params}).pipe(catchError(() => of({data: []})));
-  }
-
-  loadFunctionForAccount(searchTerm): Observable<any> {
-    const params = new HttpParams()
-      .append('searchTerm', `${searchTerm}`);
-    return this.http.get<any>(this.sourceUrl + '/load-function-for-account', {params});
-  }
-
-  loadWarehouse(searchTerm): Observable<any> {
-    const params = new HttpParams()
-      .append('searchTerm', `${searchTerm}`);
-    return this.http.get<any>(this.sourceUrl + '/load-warehouse', {params});
-  }
-
-  calculateFee(searchTerm): Observable<any> {
-    const params = new HttpParams()
-      .append('searchTerm', `${searchTerm}`);
-    return this.http.get<any>(this.sourceUrl + '/calculate-fee', {params});
+      .append('searchTerm', `${req}`);
+    return this.http.get<any>(this.sourceUrl + '/get-quantity', {params}).pipe(catchError(() => of({data: []})));
   }
 }
