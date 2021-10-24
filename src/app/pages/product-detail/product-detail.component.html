@@ -98,10 +98,10 @@
               <div class="pro__feature">
                 <h2 class="title__6">Cấu hình máy</h2>
                 <ul class="feature__list">
-                  <li style="font-size: 20px;"><i class="zmdi zmdi-play-circle"></i> Màn hình: {{product.screen}}</li>
-                  <li style="font-size: 20px;"><i class="zmdi zmdi-play-circle"></i> Hệ điều hành: {{product.os}}</li>
-                  <li style="font-size: 20px;"><i class="zmdi zmdi-play-circle"></i> RAM: {{product.ram}} </li>
-                  <li style="font-size: 20px;"><i class="zmdi zmdi-play-circle"></i> Pin: {{product.battery}}</li>
+                  <li style="font-size: 20px;" *ngIf="product.screen"><i class="zmdi zmdi-play-circle"></i> Màn hình: {{product.screen}}</li>
+                  <li style="font-size: 20px;" *ngIf="product.os"><i class="zmdi zmdi-play-circle"></i> Hệ điều hành: {{product.os}}</li>
+                  <li style="font-size: 20px;" *ngIf="product.ram"><i class="zmdi zmdi-play-circle"></i> RAM: {{product.ram}} </li>
+                  <li style="font-size: 20px;" *ngIf="product.battery"><i class="zmdi zmdi-play-circle"></i> Pin: {{product.battery}}</li>
                 </ul>
               </div>
             </div>

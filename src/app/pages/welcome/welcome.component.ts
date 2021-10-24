@@ -67,15 +67,22 @@ export class WelcomeComponent implements OnInit {
       this.brandes = res.body[1].sort((a, b) =>  a.id - b.id);
       this.categories = res.body[0].sort((a, b) => a.id - b.id);
       this.categories.forEach(n => {
-        this.brandesShow.push(this.brandes.find(m => m.idCat === n.id).id);
-        this.pageBrand.push(0);
+          this.brandesShow.push(this.brandes.find(m => m.idCat.includes(n.id)).id);
+          this.pageBrand.push(0);
       });
-      this.getProductDefaultForWelcome(this.brandes.map(n => n.id));
+      let listID = [];
+      for (let i = 0; i < this.brandes.length; i++) {
+        const listIDC = this.brandes[i].idCat.split(',');
+        for (let j = 0; j < listIDC.length; j++) {
+          listID.push({idCat: listIDC[j], idBra: this.brandes[i].id});
+        }
+      }
+      this.getProductDefaultForWelcome(listID);
     });
   }
 
-  getProductDefaultForWelcome(idBra) {
-    this.productService.getProductDefaultForWelcome(idBra).subscribe(res => {
+  getProductDefaultForWelcome(listID) {
+    this.productService.getProductDefaultForWelcome(listID).subscribe(res => {
       this.products = res;
       for (let item of this.products) {
         item.image = 'data:image/jpeg;base64,' + item.image;
@@ -84,7 +91,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   getBrandFollowUpCategory(index) {
-    return this.brandes.filter(n => n.idCat === index);
+    return this.brandes.filter(n => n.idCat.includes(index));
   }
 
   getProductFollowUpBrandAndCategory(id, index) {
@@ -98,5 +105,10 @@ export class WelcomeComponent implements OnInit {
   changeBrand(index, id) {
     this.pageBrand[index] = 0;
     this.brandesShow[index] = id;
+  }
+
+  checkChangePage(id, index) {
+    const list = this.getProductFollowUpBrandAndCategory(id, index);
+    return list.length > 3;
   }
 }

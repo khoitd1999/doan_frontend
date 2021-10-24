@@ -5,13 +5,13 @@
         Mã nhập kho:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
-        <input nz-input [(ngModel)]="wareHouseReceipt.code" [disabled]="wareHouseReceipt.id" />
+        <input nz-input [(ngModel)]="wareHouseReceipt.code" [disabled]="wareHouseReceipt.id" class="color-text" />
       </div>
       <div nz-col nzSpan="2" style="padding-left: 8px; margin-top: 15px;">
         Ngày nhập kho:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
-        <nz-date-picker [(ngModel)]="wareHouseReceipt.date" (ngModelChange)="onChange($event)" [nzFormat]="dateFormat" [disabled]="this.type === EXPORT" style="margin: 0 8px 12px 0;"></nz-date-picker>
+        <nz-date-picker [(ngModel)]="wareHouseReceipt.date" (ngModelChange)="onChange($event)" [nzFormat]="dateFormat" [disabled]="this.type === EXPORT" style="margin: 0 8px 12px 0; color: #565656 !important;"></nz-date-picker>
       </div>
     </div>
     <div nz-row>
@@ -19,7 +19,7 @@
         Nhân viên:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
-        <nz-select style="width: 100%" [(ngModel)]="wareHouseReceipt.idEmp" nzPlaceHolder="Chọn nhân viên" [disabled]="this.type === EXPORT"
+        <nz-select style="width: 100%" [(ngModel)]="wareHouseReceipt.idEmp" nzPlaceHolder="Chọn nhân viên" [disabled]="this.type === EXPORT" [class.color-text]="this.type === EXPORT"
                    nzAllowClear [nzServerSearch]=true>
           <nz-option *ngFor="let option of employees" [nzValue]="option.id" [nzLabel]="option.fullName"></nz-option>
         </nz-select>
@@ -28,7 +28,7 @@
         Kho:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
-        <nz-select style="width: 100%" [(ngModel)]="wareHouseReceipt.idWar" nzPlaceHolder="Chọn kho" [disabled]="this.type === EXPORT"
+        <nz-select style="width: 100%" [(ngModel)]="wareHouseReceipt.idWar" nzPlaceHolder="Chọn kho" [disabled]="this.type === EXPORT" [class.color-text]="this.type === EXPORT"
                    nzAllowClear [nzServerSearch]=true>
           <nz-option *ngFor="let option of wareHouses" [nzValue]="option.id" [nzLabel]="option.nameWar"></nz-option>
         </nz-select>

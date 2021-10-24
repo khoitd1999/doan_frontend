@@ -40,7 +40,7 @@
       <div nz-col nzSpan="20">
         <p style="font-size: 15px; font-weight: bold;">Tìm thâý {{total}} kết quả</p>
       </div>
-      <div nz-col nzSpan="4">
+      <div nz-col nzSpan="4" *ngIf="type === IMPORT">
         <div nz-row nzJustify="end">
           <button nz-button nzType="primary" (click)="redirectToDetail()">Thêm mới</button>
         </div>
@@ -77,7 +77,8 @@
         <td style="width: 25%">{{ data.nameEmp }}</td>
         <td style="width: 10%">{{ data.totalAmount | currency: 'VND':'symbol':'1.0-0':'vi-VN' }}</td>
         <td style="width: 10%">
-          <i nz-icon nzType="edit" style="margin-left: 15px;" (click)="redirectToDetail(data.id)"></i>
+          <i nz-icon nzType="edit" style="margin-left: 15px; cursor: pointer;" (click)="redirectToDetail(data.id)" *ngIf="type === IMPORT"></i>
+          <i nz-icon nzType="eye" style="margin-left: 15px; cursor: pointer;" (click)="redirectToDetail(data.id)" *ngIf="type === EXPORT"></i>
         </td>
       </tr>
       </tbody>

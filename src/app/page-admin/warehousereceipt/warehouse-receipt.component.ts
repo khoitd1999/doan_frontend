@@ -4,6 +4,7 @@ import {AlertService} from "../../UtilsService/alert.service";
 import {NzModalService} from "ng-zorro-antd";
 import {WareHouseReceipt} from "../../entity/warehousereceipt";
 import {Router} from "@angular/router";
+import {TypeReceipt} from "../../app.constant";
 
 @Component({
   selector: 'app-welcome',
@@ -33,6 +34,8 @@ export class WarehouseReceiptComponent implements OnInit {
   idEmp: any;
   dateFormat = 'dd/MM/yyyy';
   type: any;
+  IMPORT = TypeReceipt.IMPORT;
+  EXPORT = TypeReceipt.EXPORT;
 
   constructor(
     private warehouseReceiptService: WarehouseReceiptService,
@@ -42,9 +45,9 @@ export class WarehouseReceiptComponent implements OnInit {
     // private alertService: AlertService
   ) {
     if (this.router.url.includes('import')) {
-      this.type = 1;
+      this.type = this.IMPORT;
     } else {
-      this.type = 2;
+      this.type = this.EXPORT;
     }
   }
 

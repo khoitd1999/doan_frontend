@@ -111,10 +111,10 @@
                     </div>
                     <div class="owl-nav">
                       <div class="owl-prev">
-                        <i class="zmdi zmdi-chevron-left" (click)="changePageBrand(i)"></i>
+                        <i class="zmdi zmdi-chevron-left" (click)="changePageBrand(i)" *ngIf="checkChangePage(category.id, i)"></i>
                       </div>
                       <div class="owl-next">
-                        <i class="zmdi zmdi-chevron-right" (click)="changePageBrand(i)"></i>
+                        <i class="zmdi zmdi-chevron-right" (click)="changePageBrand(i)" *ngIf="checkChangePage(category.id, i)"></i>
                       </div>
                     </div>
                   </div>

@@ -240,30 +240,38 @@ export class ProductComponent implements OnInit {
   changeCategorySearch() {
     this.idBra = null;
     if (this.idCat) {
-      this.brandesSearch = this.brandes.filter(n => n.idCat === this.idCat);
+      this.brandesSearch = this.brandes.filter(n => n.idCat.includes(this.idCat));
     } else {
       this.brandesSearch = JSON.parse(JSON.stringify(this.brandes));
+      this.categoriesSearch = JSON.parse(JSON.stringify(this.categories));
     }
   }
 
   changeBrandSearch() {
     if (!this.idCat && this.idBra) {
-      this.idCat = this.brandesSearch.find(n => n.id === this.idBra).idCat;
+      const categoryIds = this.brandesSearch.find(n => n.id === this.idBra).idCat;
+      this.categoriesSearch = this.categories.filter(n => categoryIds.includes(n.id));
+      this.idCat = this.categoriesSearch[0].id;
+      this.brandesSearch = this.brandes.filter(n => n.idCat.includes(this.idCat));
     }
   }
 
   changeCategoryPopup() {
     this.product.idBra = null;
     if (this.product.idCat) {
-      this.brandesPopup = this.brandes.filter(n => n.idCat === this.product.idCat);
+      this.brandesPopup = this.brandes.filter(n => n.idCat.includes(this.product.idCat));
     } else {
       this.brandesPopup = JSON.parse(JSON.stringify(this.brandes));
+      this.categoriesPopup = JSON.parse(JSON.stringify(this.categories));
     }
   }
 
   changeBrandPopup() {
     if (!this.product.idCat && this.product.idBra) {
-      this.product.idCat = this.brandesSearch.find(n => n.id === this.product.idBra).idCat;
+      const categoryIds = this.brandesPopup.find(n => n.id === this.product.idBra).idCat;
+      this.categoriesPopup = this.categories.filter(n => categoryIds.includes(n.id));
+      this.product.idCat = this.categoriesPopup[0].id;
+      this.brandesPopup = this.brandes.filter(n => n.idCat.includes(this.idCat));
     }
   }
 }
