@@ -34,7 +34,13 @@ export class LoginComponent implements OnInit {
         this.alertService.error(res.message);
       } else {
         sessionStorage.setItem('client', JSON.stringify({id: res.body.id, phone: res.body.phone, fullName: res.body.fullName}));
-        this.route.navigate(['/pages']);
+        const url = sessionStorage.getItem('url');
+        if (url) {
+          this.route.navigate([sessionStorage.getItem('url')]);
+          sessionStorage.removeItem('url');
+        } else {
+          this.route.navigate(['/pages']);
+        }
       }
     });
   }

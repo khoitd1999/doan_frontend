@@ -7,6 +7,7 @@ export interface ICart {
   price?: any;
   amount?: any;
   image?: any;
+  idCli?: any;
 }
 
 export class Cart implements ICart {
@@ -18,7 +19,8 @@ export class Cart implements ICart {
     public quantity?: any,
     public price?: any,
     public amount?: any,
-    public image?: any
+    public image?: any,
+    public idCli?: any
   ) {
   }
 }

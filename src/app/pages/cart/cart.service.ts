@@ -6,11 +6,27 @@ import {catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginAdminService {
-  private sourceUrl = 'http://localhost:8081/welcome';
+export class CartService {
+  private sourceUrl = 'http://localhost:8081/cart';
 
   constructor(private http: HttpClient) {
   }
 
+  addCart(req): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/add-cart', req).pipe(catchError(() => of({data: []})));
+  }
 
+  saveCart(req): Observable<any> {
+    return this.http.post<any>(this.sourceUrl + '/save-cart', req).pipe(catchError(() => of({data: []})));
+  }
+
+  deleteCart(req): Observable<any> {
+    const params = new HttpParams().append("id", req);
+    return this.http.delete<any>(this.sourceUrl + '/delete-cart', {params}).pipe(catchError(() => of({data: []})));
+  }
+
+  getListCart(req): Observable<any> {
+    const params = new HttpParams().append("idCli", req);
+    return this.http.get<any>(this.sourceUrl + '/get-cart-by-idCli', {params}).pipe(catchError(() => of({data: []})));
+  }
 }

@@ -35,6 +35,10 @@ const routes: Routes = [
         path: 'search-bill',
         loadChildren: () => import('./search-bill/search-bill.module').then(m => m.SearchBillModule)
       },
+      {
+        path: 'policy',
+        loadChildren: () => import('./policy/policy.module').then(m => m.PolicyModule)
+      },
     ],
   }
   ,
