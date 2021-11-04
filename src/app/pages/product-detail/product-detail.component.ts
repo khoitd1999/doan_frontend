@@ -6,6 +6,7 @@ import {Cart} from "../../entity/cart";
 import {AlertService} from "../../UtilsService/alert.service";
 import {Comment, IComment} from "../../entity/comment";
 import {InventoryService} from "../../page-admin/inventory/inventory.service";
+import {CartService} from "../cart/cart.service";
 
 @Component({
   selector: 'app-welcome',
@@ -32,6 +33,7 @@ export class ProductDetailComponent implements OnInit {
   rate = 0;
   tooltips = ['Tồi tệ', 'Tệ', 'Bình thường', 'Tốt', 'Tuyệt vời'];
   quantityInInventory = 0;
+  client: any;
 
   constructor(
     private productService: ProductService,
@@ -39,7 +41,8 @@ export class ProductDetailComponent implements OnInit {
     private warehouseService: WarehouseService,
     private alertService: AlertService,
     private route: Router,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private cartService: CartService
   ) {
 
   }
@@ -62,6 +65,7 @@ export class ProductDetailComponent implements OnInit {
         this.getAllComment(this.product.id);
         this.loadProvince();
       }
+      this.client = JSON.parse(sessionStorage.getItem('client'));
     });
   }
 
@@ -103,32 +107,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart() {
-    let cart = new Cart();
-    cart.image = this.product.image;
-    cart.quantity = this.quantity;
-    cart.namePro = this.product.namePro;
-    cart.idPro = this.product.id;
-    cart.price = this.product.price;
-    cart.amount = this.product.price * this.quantity;
-
-    const str = sessionStorage.getItem('cart');
-    let carts;
-    if (str) {
-      carts = JSON.parse(str);
-      let index = carts.map(n => n.idPro).indexOf(cart.idPro);
-      if (index > -1) {
-        carts[index].quantity += cart.quantity;
-        carts[index].amount += cart.amount;
-      } else {
-        carts.push(cart);
-      }
+    if (this.client) {
+      let cart = new Cart();
+      cart.quantity = this.quantity;
+      cart.namePro = this.product.namePro;
+      cart.idPro = this.product.id;
+      cart.price = this.product.price;
+      cart.amount = this.product.price * this.quantity;
+      cart.idCli = this.client.id;
+      this.cartService.addCart(cart).subscribe(res => {
+        this.alertService.success('Thêm vào giỏ hàng thành công');
+      });
     } else {
-      carts = [];
-      carts.push(cart);
+      const url = '/pages/product-detail/' + this.product.id;
+      sessionStorage.setItem('url', url);
+      this.route.navigate(['/pages/login']);
     }
-    sessionStorage.setItem('cart', JSON.stringify(carts));
-    this.alertService.success('Thêm vào giỏ hàng thành công');
-    this.route.navigate(['/pages']);
   }
 
   changeActive() {

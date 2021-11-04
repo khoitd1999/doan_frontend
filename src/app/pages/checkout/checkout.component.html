@@ -19,7 +19,7 @@
           <div nz-row>
             <div nz-col nzSpan="2"></div>
             <div nz-col nzSpan="20">
-              <nz-table #basicTable [nzData]="carts">
+              <nz-table #basicTable [nzBordered]="true" [nzData]="carts">
                 <thead>
                 <tr>
                   <th style="width: 35%" [nzAlign]="'center'">Ảnh</th>
@@ -101,7 +101,7 @@
                   </div>
                 </div>
                 <div nz-row style="margin-top: 15px; background-color: #FFFFFF; padding: 20px;" *ngIf="idWarType0">
-                  <nz-table #rowSelectionTable  [nzData]="[deliveryCharge]" *ngIf="deliveryCharge && deliveryCharge.id">
+                  <nz-table #rowSelectionTable [nzBordered]="true"  [nzData]="[deliveryCharge]" *ngIf="deliveryCharge && deliveryCharge.id">
                     <thead>
                     <tr>
                       <th></th>
@@ -120,7 +120,7 @@
                 </div>
                 <div nz-row style="margin-top: 15px;" *ngIf="cartsNotPurchases && cartsNotPurchases.length > 0">
                   <p>SẢN PHẨM KHÔNG CÓ SẴN Ở NƠI GẦN NHẤT</p>
-                  <nz-table #basicTable [nzData]="cartsNotPurchases" style="margin-top: 10px; background-color: #FFFFFF; padding: 20px;">
+                  <nz-table #basicTable [nzBordered]="true" [nzData]="cartsNotPurchases" style="margin-top: 10px; background-color: #FFFFFF; padding: 20px;">
                     <thead>
                     <tr>
                       <th style="width: 25%" [nzAlign]="'center'">Ảnh</th>
@@ -168,7 +168,7 @@
                   </div>
                 </div>
                 <div nz-row style="margin-top: 15px; background-color: #FFFFFF; padding: 20px;">
-                  <nz-table #rowSelectionTable  [nzData]="warehouses" *ngIf="warehouses.length > 0">
+                  <nz-table #rowSelectionTable [nzBordered]="true"  [nzData]="warehouses" *ngIf="warehouses.length > 0">
                     <thead>
                     <tr>
                       <th></th>
@@ -187,7 +187,7 @@
                 </div>
                 <div nz-row style="margin-top: 15px;" *ngIf="cartsNotPurchases && cartsNotPurchases.length > 0">
                   <p>SẢN PHẨM KHÔNG CÓ SẴN TRONG CỬA HÀNG ĐÃ CHỌN</p>
-                  <nz-table #basicTable [nzData]="cartsNotPurchases" style="margin-top: 10px; background-color: #FFFFFF; padding: 20px;">
+                  <nz-table #basicTable [nzBordered]="true" [nzData]="cartsNotPurchases" style="margin-top: 10px; background-color: #FFFFFF; padding: 20px;">
                     <thead>
                     <tr>
                       <th style="width: 25%" [nzAlign]="'center'">Ảnh</th>

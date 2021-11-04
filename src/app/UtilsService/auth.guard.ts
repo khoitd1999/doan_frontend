@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate {
       if (employee) {
         return true;
       } else {
+        sessionStorage.setItem('url', state.url);
         this.route.navigate(['/pages/login']);
         return false;
       }

@@ -10,6 +10,7 @@ import {Subscription} from "rxjs";
 import {NotificationService} from "../../UtilsService/notification.service";
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import {CartService} from "../cart/cart.service";
 
 @Component({
   selector: 'app-welcome',
@@ -44,7 +45,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private modal: NzModalService,
     private currencyPipe: CurrencyPipe,
     private route: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cartService: CartService
   ) {
   }
 
@@ -55,11 +57,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.wards = [];
     this.warehouses = [];
     this.cartsNotPurchases = [];
-    this.carts = JSON.parse(sessionStorage.getItem('cart'));
+    this.carts = [];
     this.typeShip = this.GIAO_HANG_TAN_NOI;
     this.client = JSON.parse(sessionStorage.getItem('client'));
+    this.getListCart();
     this.loadMoreProvince(null);
     this.connect();
+  }
+
+  getListCart() {
+    this.cartService.getListCart(this.client.id).subscribe(res => {
+      this.carts = res;
+      for (let item of this.carts) {
+        item.image = 'data:image/jpeg;base64,' + item.image;
+      }
+    });
   }
 
   loadMoreProvince(searchText?: string) {
@@ -146,8 +158,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   removeProductFromCart(data) {
-    this.cartsNotPurchases = this.cartsNotPurchases.filter(n => n.idPro !== data.idPro);
-    this.carts = this.carts.filter(n => n.idPro !== data.idPro);
+    this.cartService.deleteCart(data.id).subscribe(() => {
+      this.cartsNotPurchases = this.cartsNotPurchases.filter(n => n.idPro !== data.idPro);
+      this.carts = this.carts.filter(n => n.idPro !== data.idPro);
+    });
   }
 
   ngOnDestroy(): void {
@@ -228,7 +242,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.bill.carts = [];
     this.carts.forEach(res => {
-      this.bill.carts.push({idPro: res.idPro, namePro: res.namePro, quantity: res.quantity, price: res.price, amount: res.amount});
+      this.bill.carts.push({id: res.id, idPro: res.idPro, namePro: res.namePro, quantity: res.quantity, price: res.price, amount: res.amount, idCli: res.idCli});
     });
     this.bill.typeShip = +this.typeShip;
     this.bill.fee = this.deliveryCharge ? this.deliveryCharge.fee : 0;
