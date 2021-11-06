@@ -2,8 +2,10 @@ export interface IEmployee {
   id?: any;
   username?: any;
   password?: any;
-  fullname?: any;
+  fullName?: any;
   role?: any;
+  status?: any;
+  rePassword?: any;
 }
 
 export class Employee implements IEmployee {
@@ -11,8 +13,10 @@ export class Employee implements IEmployee {
     public id?: any,
     public username?: any,
     public password?: any,
-    public fullname?: any,
-    public role?: any
+    public fullName?: any,
+    public role?: any,
+    public status?: any,
+    public rePassword?: any
   ) {
   }
 }

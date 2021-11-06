@@ -30,7 +30,7 @@ export class LoginAdminComponent implements OnInit {
       if (res.message) {
         this.alertService.error(res.message);
       } else {
-        sessionStorage.setItem('employee', JSON.stringify({id: res.body.id, fullName: res.body.fullName}));
+        sessionStorage.setItem('employee', JSON.stringify({id: res.body.id, fullName: res.body.fullName, role: res.body.role}));
         this.route.navigate(['/pages_admin']);
       }
     });

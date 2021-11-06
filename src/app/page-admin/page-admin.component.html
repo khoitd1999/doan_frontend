@@ -28,6 +28,10 @@
         <i nz-icon nzType="shopping"></i>
         <span routerLink="/pages_admin/inventory">Hàng tồn kho</span>
       </li>
+      <li nz-menu-item *ngIf="this.user.role === 'ADMIN'">
+        <i nz-icon nzType="user"></i>
+        <span routerLink="/pages_admin/employee">Quản lý nhân viên</span>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>
