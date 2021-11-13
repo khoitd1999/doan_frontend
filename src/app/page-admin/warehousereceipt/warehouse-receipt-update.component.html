@@ -1,14 +1,20 @@
 <div style="height: 850px;">
   <div class="header-page">
     <div nz-row>
-      <div nz-col nzSpan="2" style="padding-left: 0; margin-top: 15px;">
+      <div nz-col nzSpan="2" style="padding-left: 0; margin-top: 15px;" *ngIf="this.type === IMPORT">
         Mã nhập kho:
+      </div>
+      <div nz-col nzSpan="2" style="padding-left: 0; margin-top: 15px;" *ngIf="this.type === EXPORT">
+        Mã xuất kho:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
         <input nz-input [(ngModel)]="wareHouseReceipt.code" [disabled]="wareHouseReceipt.id" class="color-text" />
       </div>
-      <div nz-col nzSpan="2" style="padding-left: 8px; margin-top: 15px;">
+      <div nz-col nzSpan="2" style="padding-left: 8px; margin-top: 15px;" *ngIf="this.type === IMPORT">
         Ngày nhập kho:
+      </div>
+      <div nz-col nzSpan="2" style="padding-left: 8px; margin-top: 15px;" *ngIf="this.type === EXPORT">
+        Ngày xuất kho:
       </div>
       <div nz-col nzSpan="10" style="margin-top: 15px;">
         <nz-date-picker [(ngModel)]="wareHouseReceipt.date" (ngModelChange)="onChange($event)" [nzFormat]="dateFormat" [disabled]="this.type === EXPORT" style="margin: 0 8px 12px 0; color: #565656 !important;"></nz-date-picker>

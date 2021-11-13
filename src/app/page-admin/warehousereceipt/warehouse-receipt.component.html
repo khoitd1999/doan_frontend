@@ -62,7 +62,8 @@
     >
       <thead>
       <tr>
-        <th style="width: 15%">Ngày nhập kho</th>
+        <th style="width: 15%" *ngIf="this.type === IMPORT">Ngày nhập kho</th>
+        <th style="width: 15%" *ngIf="this.type === EXPORT">Ngày xuất kho</th>
         <th style="width: 15%">Mã nhập</th>
         <th style="width: 25%">Kho</th>
         <th style="width: 25%">Nhân viên thực hiện</th>
