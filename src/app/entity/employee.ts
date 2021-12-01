@@ -6,6 +6,8 @@ export interface IEmployee {
   role?: any;
   status?: any;
   rePassword?: any;
+  phone?: any;
+  email?: any;
 }
 
 export class Employee implements IEmployee {
@@ -16,7 +18,9 @@ export class Employee implements IEmployee {
     public fullName?: any,
     public role?: any,
     public status?: any,
-    public rePassword?: any
+    public rePassword?: any,
+    public phone?: any,
+    public email?: any
   ) {
   }
 }
