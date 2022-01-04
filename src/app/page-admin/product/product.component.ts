@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
     this.product = new Product();
     this.alertService.name = 'DANH SÁCH SẢN PHẨM';
     this.loadCategoryAndBrand();
-    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '',  idCat: this.idCat, idBra: this.idBra}));
+    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '',  idCat: this.idCat, idBra: this.idBra, isAdmin: true}));
     // this.loadMore(null, null);
   }
 
@@ -62,6 +62,7 @@ export class ProductComponent implements OnInit {
     this.productService.loadCategoryAndBrand().subscribe(res => {
       this.brandes = res.body[1];
       this.categories = res.body[0];
+      // deep copy
       this.brandesSearch = JSON.parse(JSON.stringify(this.brandes));
       this.brandesPopup = JSON.parse(JSON.stringify(this.brandes));
       this.categoriesSearch = JSON.parse(JSON.stringify(this.categories));
@@ -91,7 +92,7 @@ export class ProductComponent implements OnInit {
     } else {
       this.pageIndex = index;
     }
-    const searchTerm = JSON.stringify({ nameSearch: this.nameSearch || '', idCat: this.idCat, idBra: this.idBra });
+    const searchTerm = JSON.stringify({ nameSearch: this.nameSearch || '', idCat: this.idCat, idBra: this.idBra, isAdmin: true });
     this.loadDataFromServer(this.pageIndex, this.pageSize, searchTerm);
   }
 
@@ -159,7 +160,7 @@ export class ProductComponent implements OnInit {
       } else {
         date += '-' + (this.product.date.getDate() + 1);
       }
-      this.product.date = date;
+      this.product.date = date; // convert ngày về dạng yyyy-MM-dd
     } catch (e) {
 
     }
@@ -175,7 +176,7 @@ export class ProductComponent implements OnInit {
       this.alertService.success('Thao tác thực hiện thành công');
       this.product = new Product();
       this.product.status = true;
-      this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '',  idCat: this.idCat, idBra: this.idBra }));
+      this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '',  idCat: this.idCat, idBra: this.idBra, isAdmin: true }));
     }, err => {
       this.isOkLoading = false;
       this.alertService.error(err.error.message);
@@ -185,7 +186,7 @@ export class ProductComponent implements OnInit {
   searchPagination(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
-    const searchTerm = JSON.stringify({ nameSearch: this.nameSearch || '', idCat: this.idCat, idBra: this.idBra });
+    const searchTerm = JSON.stringify({ nameSearch: this.nameSearch || '', idCat: this.idCat, idBra: this.idBra, isAdmin: true });
     this.loadDataFromServer(this.pageIndex, this.pageSize, searchTerm);
   }
 
@@ -195,7 +196,7 @@ export class ProductComponent implements OnInit {
     this.nameSearch = null;
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '', idCat: null, idBra: null }));
+    this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '', idCat: null, idBra: null, isAdmin: true }));
   }
 
   showDeleteConfirm(data, title, next?): void {

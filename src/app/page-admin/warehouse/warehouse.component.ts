@@ -96,22 +96,17 @@ export class WarehouseComponent implements OnInit {
     this.save();
   }
 
-  async save(obj?, notNext?): Promise<void> {
+  async save(obj?): Promise<void> {
     if (!obj) {
       if (this.checkErr()) {
         this.isOkLoading = false;
         return;
       }
     }
-    if (obj && !notNext) {
+    if (obj) {
+      // xác nhận bỏ hoạt động của kho
       this.warehouse = Object.assign({}, obj);
       this.warehouse.status = false;
-      // const status = await this.checkBefore(obj.id);
-      // if (status) {
-      //   this.showDeleteConfirm(this.warehouse, 'Đã có ít nhất một tài khoản sử dụng chức năng này. ' +
-      //     'Bạn có muốn tiếp tục không?', true);
-      //   return;
-      // }
     } else {
       this.warehouse.address = '';
       if (this.warehouse.street) {
@@ -209,18 +204,16 @@ export class WarehouseComponent implements OnInit {
     this.loadDataFromServer(this.pageIndex, this.pageSize, JSON.stringify({ nameSearch: '' }));
   }
 
-  showDeleteConfirm(data, title, next?): void {
+  showDeleteConfirm(data, title): void {
     this.modal.confirm({
       nzTitle: title,
       nzOkText: 'OK',
       nzOkType: 'primary',
       // nzOkDanger: true,
-      nzOnOk: () => this.save(data, next),
+      nzOnOk: () => this.save(data),
       nzCancelText: 'Đóng lại',
       nzOnCancel: () => {
-        if (next) {
-          // this.function.status = true;
-        }
+
       }
     });
   }

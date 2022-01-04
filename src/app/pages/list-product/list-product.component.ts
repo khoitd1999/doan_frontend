@@ -57,7 +57,7 @@ export class ListProductComponent implements OnInit {
 
   loadAll() {
     const search: any = document.getElementById('searchText');
-    const searchTerm = JSON.stringify({ idBra: this.idBra, sizeCurrent: this.products.length, priceFilter: this.priceFilter, nameSearch: search.value });
+    const searchTerm = JSON.stringify({ idBra: this.idBra, sizeCurrent: this.products.length, priceFilter: this.priceFilter, nameSearch: search.value, isAdmin: false });
     this.productService.loadAllData(this.pageIndex - 1, this.pageSize, searchTerm).subscribe(res => {
       // this.total = res.body[1];
       for (let item of res.body[0]) {
